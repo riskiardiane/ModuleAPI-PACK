@@ -46,6 +46,15 @@ node test.js quran list
 node test.js quran doa 1
 node test.js quran doalist
 
+# Komik (KomikMama)
+node test.js komikmama home
+node test.js komikmama search "one piece"
+node test.js komikmama detail "https://komikmama.online/komik/one-piece/"
+node test.js komikmama reading "https://komikmama.online/one-piece-chapter-1174-bahasa-indonesia/"
+node test.js komikmama genres
+node test.js genre martial-arts 2
+node test.js komikmama filter 11 ongoing manhwa update 1
+
 # Downloader & Sticker
 node test.js tiktok <url>
 node test.js brat "halo dunia"
@@ -164,6 +173,20 @@ const test = require('./test');
 | **Get Surah** | `testQuran(number)` | `number` (number) | Daftar ayat dalam satu surah. |
 | **Doa List** | `testDoaList()` | - | Daftar doa-doa harian. |
 | **Doa Detail** | `testDoa(id)` | `id` (number) | Teks Arab dan terjemahan doa. |
+
+---
+
+## 📚 KomikMama (Manga Scraper)
+
+| Fitur | Fungsi | Parameter | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| **Home** | `testKomikMamaHome()` | - | Komik terbaru, slider, dan populer. |
+| **Search** | `testKomikMamaSearch(q, p)` | `query` (str), `page` (num) | Cari komik dengan pagination. |
+| **Detail** | `testKomikMamaDetail(url)` | `url` (string) | Informasi lengkap komik & list chapter. |
+| **Reading** | `testKomikMamaChapter(url)` | `url` (string) | Gambar chapter dan navigasi prev/next. |
+| **Genres** | `testKomikMamaGenres()` | - | Daftar semua kategori genre & jumlah komik. |
+| **By Genre** | `testKomikMamaByGenre(slug, p)` | `slug` (str), `page` (num) | Daftar komik per genre (E.g. martial-arts). |
+| **Filter** | `testKomikMamaFilter(g, s, t, o, p)` | ID/string (multiple) | Filter canggih (Genre ID, Status, Tipe, Order). |
 
 ---
 

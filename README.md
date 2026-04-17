@@ -13,6 +13,7 @@ Koleksi API Scraper modular yang powerful untuk berbagai kebutuhan, mulai dari d
 | **Movie** | LK21 | Informasi film, filter kategori, hingga ekstraksi link download dari LK21. |
 | **Musik** | Lyrics | Cari lirik lagu secara akurat berdasarkan judul atau artis. |
 | **Islami** | Quran & Doa | Daftar surah, ayat, dan doa-doa harian dari Quran NU. |
+| **Komik** | KomikMama | Scraper komik (Manga, Manhwa, Manhua) dari KomikMama.online. |
 
 ## 🛠️ Instalasi
 
@@ -124,6 +125,18 @@ const anime = await test.testAnimkuDetail("naruto");
 | `getSurah(number)` | surah number | Surah details + ayat |
 | `getListDoa()` | - | List doa harian |
 | `getDoaDetail(id)` | doa number | Doa detail |
+
+### KomikMama (Manga Scraper)
+
+| Method | Parameter | Return |
+|--------|-----------|--------|
+| `home()` | - | Home data (Slider, Popular, Latest) |
+| `search(query, page?)` | query string, page optional | Search results with pagination |
+| `detail(url)` | comic URL | Detail info + chapter list |
+| `chapter(url)` | chapter URL | Chapter images + navigation |
+| `genres()` | - | All genre categories |
+| `getByGenre(slug, page?)` | genre slug, page optional | Comics by genre |
+| `getFilter({genre, status, type, order, page})` | filter object | Advanced filter results |
 
 ## 📝 Kontribusi
 

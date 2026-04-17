@@ -1,4 +1,4 @@
-const { tiktok, brat, animku, lk21, donghub, lyrics, quran } = require("./fitur");
+const { tiktok, brat, animku, lk21, donghub, lyrics, quran, komikmama } = require("./fitur");
 
 async function testTiktok(url) {
   console.log("[Test] TikTok Downloader...");
@@ -197,6 +197,41 @@ async function testDoa(id) {
   return await quran.getDoaDetail(id);
 }
 
+async function testKomikMamaHome() {
+  console.log("[Test] KomikMama home...");
+  return await komikmama.home();
+}
+
+async function testKomikMamaSearch(query, page) {
+  console.log("[Test] KomikMama search...");
+  return await komikmama.search(query, page);
+}
+
+async function testKomikMamaDetail(url) {
+  console.log("[Test] KomikMama detail...");
+  return await komikmama.detail(url);
+}
+
+async function testKomikMamaChapter(url) {
+  console.log("[Test] KomikMama chapter...");
+  return await komikmama.chapter(url);
+}
+
+async function testKomikMamaGenres() {
+  console.log("[Test] KomikMama genres...");
+  return await komikmama.genres();
+}
+
+async function testKomikMamaByGenre(slug, page) {
+  console.log("[Test] KomikMama getByGenre...");
+  return await komikmama.getByGenre(slug, page);
+}
+
+async function testKomikMamaFilter(genre, status, type, order, page) {
+  console.log("[Test] KomikMama getFilter...");
+  return await komikmama.getFilter({ genre, status, type, order, page });
+}
+
 module.exports = {
   testTiktok,
   testBrat,
@@ -231,7 +266,14 @@ module.exports = {
   testQuranList,
   testQuran,
   testDoaList,
-  testDoa
+  testDoa,
+  testKomikMamaHome,
+  testKomikMamaSearch,
+  testKomikMamaDetail,
+  testKomikMamaChapter,
+  testKomikMamaGenres,
+  testKomikMamaByGenre,
+  testKomikMamaFilter
 };
 
 if (require.main === module) {
@@ -240,6 +282,8 @@ if (require.main === module) {
   let p1 = args[1];
   let p2 = args[2];
   let p3 = args[3];
+  let p4 = args[4];
+  let p5 = args[5];
 
   if (!command) {
     console.log("🚀 =========================================== 🚀");
@@ -254,6 +298,15 @@ if (require.main === module) {
     console.log("  - node test.js donghua watch \"slug-eps\"");
     console.log("  - node test.js donghua schedule");
     console.log("  - node test.js donghua genres");
+
+    console.log("\n📌 [KOMIK SHORTCUTS]");
+    console.log("  - node test.js komikmama home");
+    console.log("  - node test.js komikmama search \"query\" [page]");
+    console.log("  - node test.js komikmama detail \"url\"");
+    console.log("  - node test.js komikmama reading \"url\"");
+    console.log("  - node test.js komikmama genres");
+    console.log("  - node test.js genre \"martial-arts\" [page]");
+    console.log("  - node test.js komikmama filter <genre_id> <status> <type> <order> [page]");
 
     console.log("\n📌 [OTHER SHORTCUTS]");
     console.log("  - node test.js tiktok <url>");
@@ -305,7 +358,19 @@ if (require.main === module) {
       search: 'testLK21Search',
       detail: 'testLK21Detail',
       download: 'testLK21DownloadLinks'
-    }
+    },
+    komikmama: {
+      home: 'testKomikMamaHome',
+      search: 'testKomikMamaSearch',
+      detail: 'testKomikMamaDetail',
+      chapter: 'testKomikMamaChapter',
+      reading: 'testKomikMamaChapter',
+      genres: 'testKomikMamaGenres',
+      genre: 'testKomikMamaByGenre',
+      filter: 'testKomikMamaFilter'
+    },
+    genre: 'testKomikMamaByGenre',
+    komik: 'komikmama'
   };
 
   if (shortcuts[command]) {
@@ -318,7 +383,9 @@ if (require.main === module) {
         command = target[sub];
         p1 = p2;
         p2 = p3;
-        p3 = args[4];
+        p3 = p4;
+        p4 = p5;
+        p5 = args[6];
       }
     } else {
       command = target;
@@ -333,7 +400,7 @@ if (require.main === module) {
         if (p1 && (p1.startsWith('{') || p1.startsWith('['))) {
           try { param1 = JSON.parse(p1); } catch (e) { }
         }
-        const result = await fn(param1, p2, p3);
+        const result = await fn(param1, p2, p3, p4, p5);
         console.log(JSON.stringify(result, null, 2));
       } catch (err) {
         console.error("❌ Execution Error:", err.message || err);

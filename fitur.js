@@ -5,6 +5,7 @@ const lk21 = require("./data/watch/lk21");
 const donghub = require("./data/watch/donghub");
 const lyrics = require("./data/music/lyrics");
 const quran = require("./data/islami/quran");
+const komikmama = require("./data/read/komikmama");
 
 module.exports = {
   tiktok: tiktokdl2,
@@ -13,5 +14,6 @@ module.exports = {
   lk21,
   donghub,
   lyrics,
-  quran
+  quran,
+  komikmama
 };
