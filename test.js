@@ -1,5 +1,5 @@
 // test.js
-const { tiktok, brat, animku, lk21, lyrics, quran } = require("./fitur");
+const { tiktok, brat, animku, lk21, donghub, lyrics, quran } = require("./fitur");
 
 const args = process.argv.slice(2);
 const command = args[0];
@@ -8,12 +8,12 @@ const input = args.slice(1).join(" ");
 async function run() {
   if (!command) {
     console.log("Penggunaan: node test.js <fitur> <input>");
-    console.log("Fitur: tiktok, brat, bratvid, animku, lk21, lyrics, quran");
+    console.log("Fitur: tiktok, brat, bratvid, animku, lk21, donghub, lyrics, quran");
     return;
   }
 
   // Some commands don't require additional input
-  const noInputCommands = ["animkuhome", "lk21home", "quranlist", "doalist"];
+  const noInputCommands = ["animkuhome", "lk21home", "donghubhome", "donghubgenres", "donghubschedule", "quranlist", "doalist"];
   if (!input && !noInputCommands.includes(command.toLowerCase())) {
     console.log(`Silakan masukkan input untuk fitur ${command}`);
     return;
@@ -132,6 +132,53 @@ async function run() {
       case "lk21downloadlinks":
         console.log("[Test] LK21 getDownloadLinks...");
         console.log(JSON.stringify(await lk21.getDownloadLinks(input), null, 2));
+        break;
+
+      // -----------------------------------------------------------------
+      // Donghub API
+      case "donghubhome":
+        console.log("[Test] Donghub getHome...");
+        console.log(JSON.stringify(await donghub.getHome(), null, 2));
+        break;
+      case "donghubsearch":
+        console.log("[Test] Donghub search...");
+        // Check if input has page: "query --page=2"
+        let searchQuery = input;
+        let searchPage = 1;
+        if (input.includes('--page=')) {
+          const parts = input.split('--page=');
+          searchQuery = parts[0].trim();
+          searchPage = parseInt(parts[1]) || 1;
+        }
+        console.log(JSON.stringify(await donghub.search(searchQuery, { page: searchPage }), null, 2));
+        break;
+      case "donghubdetail":
+        console.log("[Test] Donghub getDetail...");
+        // Check if input has limit: "slug --limit=10"
+        let detailSlug = input;
+        let detailLimit = null;
+        if (input.includes('--limit=')) {
+          const parts = input.split('--limit=');
+          detailSlug = parts[0].trim();
+          detailLimit = parseInt(parts[1]) || null;
+        }
+        console.log(JSON.stringify(await donghub.getDetail(detailSlug, { limitEpisodes: detailLimit }), null, 2));
+        break;
+      case "donghubwatch":
+        console.log("[Test] Donghub getWatch...");
+        console.log(JSON.stringify(await donghub.getWatch(input), null, 2));
+        break;
+      case "donghubschedule":
+        console.log("[Test] Donghub getSchedule...");
+        console.log(JSON.stringify(await donghub.getSchedule(), null, 2));
+        break;
+      case "donghubgenres":
+        console.log("[Test] Donghub getGenreList...");
+        console.log(JSON.stringify(await donghub.getGenreList(), null, 2));
+        break;
+      case "donghubgenre":
+        console.log("[Test] Donghub getByGenre...");
+        console.log(JSON.stringify(await donghub.getByGenre(input), null, 2));
         break;
 
       // -----------------------------------------------------------------

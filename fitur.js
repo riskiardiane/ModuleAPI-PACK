@@ -2,6 +2,7 @@ const { tiktokdl2 } = require("./data/downloader/ssstiktok");
 const brat = require("./data/fitur/brat");
 const animku = require("./data/watch/animku");
 const lk21 = require("./data/watch/lk21");
+const donghub = require("./data/watch/donghub");
 const lyrics = require("./data/music/lyrics");
 const quran = require("./data/islami/quran");
 
@@ -10,6 +11,7 @@ module.exports = {
   brat,
   animku,
   lk21,
+  donghub,
   lyrics,
   quran
 };
