@@ -1,241 +1,265 @@
-// test.js
+// test.js - Test module for all API features
 const { tiktok, brat, animku, lk21, donghub, lyrics, quran } = require("./fitur");
 
-const args = process.argv.slice(2);
-const command = args[0];
-const input = args.slice(1).join(" ");
-
-async function run() {
-  if (!command) {
-    console.log("Penggunaan: node test.js <fitur> <input>");
-    console.log("Fitur: tiktok, brat, bratvid, animku, lk21, donghub, lyrics, quran");
-    return;
-  }
-
-  // Some commands don't require additional input
-  const noInputCommands = ["animkuhome", "lk21home", "donghubhome", "donghubgenres", "donghubschedule", "quranlist", "doalist"];
-  if (!input && !noInputCommands.includes(command.toLowerCase())) {
-    console.log(`Silakan masukkan input untuk fitur ${command}`);
-    return;
-  }
-
-  try {
-    switch (command.toLowerCase()) {
-      // -----------------------------------------------------------------
-      // TikTok
-      case "tiktok":
-        console.log("[Test] TikTok Downloader...");
-        const resTikTok = await tiktok(input);
-        console.log(JSON.stringify(resTikTok, null, 2));
-        break;
-
-      // -----------------------------------------------------------------
-      // Brat (image)
-      case "brat":
-        console.log("[Test] Brat (Plugin Mode)...");
-        console.log("Catatan: Fitur Brat sekarang menggunakan struktur plugin WhatsApp.");
-        console.log("Mencoba menjalankan handler with mock data...");
-
-        const mockM = { reply: (msg) => console.log("Bot Reply:", msg), chat: "test_chat" };
-        const mockSock = {
-          sendStimg: (chat, buffer, m, metadata) => {
-            const fs = require("fs");
-            fs.writeFileSync("test_brat_plugin.png", buffer);
-            console.log("Sticker berhasil disimpan ke: test_brat_plugin.png");
-            console.log("Metadata:", metadata);
-          },
-        };
-        await brat(mockM, mockSock, { text: input, prefix: ".", command: "brat" });
-        break;
-
-      // -----------------------------------------------------------------
-      // BratVid (video)
-      case "bratvid":
-        console.log("[Test] BratVid (Plugin Mode)...");
-
-        const mockMVid = { reply: (msg) => console.log("Bot Reply:", msg), chat: "test_chat" };
-        const mockSockVid = {
-          sendStimg: (chat, buffer, m, metadata) => {
-            const fs = require("fs");
-            fs.writeFileSync("test_brat_plugin.mp4", buffer);
-            console.log("Video Sticker berhasil disimpan ke: test_brat_plugin.mp4");
-            console.log("Metadata:", metadata);
-          },
-        };
-        await brat(mockMVid, mockSockVid, { text: input, prefix: ".", command: "bratvid" });
-        break;
-
-      // -----------------------------------------------------------------
-      // Animku API
-      case "animkuhome":
-        console.log("[Test] Animku getHome...");
-        console.log(JSON.stringify(await animku.getHome(), null, 2));
-        break;
-      case "animkudetail":
-        console.log("[Test] Animku getDetail...");
-        console.log(JSON.stringify(await animku.getDetail(input), null, 2));
-        break;
-      case "animkuwatch":
-        console.log("[Test] Animku getWatch...");
-        console.log(JSON.stringify(await animku.getWatch(input), null, 2));
-        break;
-      case "animkugenre":
-        console.log("[Test] Animku getGenre...");
-        console.log(JSON.stringify(await animku.getGenre(input), null, 2));
-        break;
-      case "animkusearch":
-        console.log("[Test] Animku search...");
-        console.log(JSON.stringify(await animku.search(input), null, 2));
-        break;
-      case "animkudirector":
-        console.log("[Test] Animku getDirector...");
-        console.log(JSON.stringify(await animku.getDirector(input), null, 2));
-        break;
-      case "animkuproducer":
-        console.log("[Test] Animku getProducer...");
-        console.log(JSON.stringify(await animku.getProducer(input), null, 2));
-        break;
-      case "animkustudio":
-        console.log("[Test] Animku getStudio...");
-        console.log(JSON.stringify(await animku.getStudio(input), null, 2));
-        break;
-      case "animkuseason":
-        console.log("[Test] Animku getSeason...");
-        console.log(JSON.stringify(await animku.getSeason(input), null, 2));
-        break;
-      case "animkucast":
-        console.log("[Test] Animku getCast...");
-        console.log(JSON.stringify(await animku.getCast(input), null, 2));
-        break;
-
-      // -----------------------------------------------------------------
-      // LK21 API
-      case "lk21home":
-        console.log("[Test] LK21 getHome...");
-        console.log(JSON.stringify(await lk21.getHome(), null, 2));
-        break;
-      case "lk21search":
-        console.log("[Test] LK21 getSearch...");
-        console.log(JSON.stringify(await lk21.getSearch(input), null, 2));
-        break;
-      case "lk21filter":
-        console.log("[Test] LK21 getFilter (JSON options)...");
-        let raw = input.trim().replace(/^['"]|['"]$/g, "");
-        console.log('Raw input before JSON.parse:', raw);
-        const filterOpts = JSON.parse(raw);
-        console.log(JSON.stringify(await lk21.getFilter(filterOpts), null, 2));
-        break;
-      case "lk21detail":
-        console.log("[Test] LK21 getDetail...");
-        console.log(JSON.stringify(await lk21.getDetail(input), null, 2));
-        break;
-      case "lk21downloadlinks":
-        console.log("[Test] LK21 getDownloadLinks...");
-        console.log(JSON.stringify(await lk21.getDownloadLinks(input), null, 2));
-        break;
-
-      // -----------------------------------------------------------------
-      // Donghub API
-      case "donghubhome":
-        console.log("[Test] Donghub getHome...");
-        console.log(JSON.stringify(await donghub.getHome(), null, 2));
-        break;
-      case "donghubsearch":
-        console.log("[Test] Donghub search...");
-        // Check if input has page: "query --page=2"
-        let searchQuery = input;
-        let searchPage = 1;
-        if (input.includes('--page=')) {
-          const parts = input.split('--page=');
-          searchQuery = parts[0].trim();
-          searchPage = parseInt(parts[1]) || 1;
-        }
-        console.log(JSON.stringify(await donghub.search(searchQuery, { page: searchPage }), null, 2));
-        break;
-      case "donghubdetail":
-        console.log("[Test] Donghub getDetail...");
-        // Check if input has limit: "slug --limit=10"
-        let detailSlug = input;
-        let detailLimit = null;
-        if (input.includes('--limit=')) {
-          const parts = input.split('--limit=');
-          detailSlug = parts[0].trim();
-          detailLimit = parseInt(parts[1]) || null;
-        }
-        console.log(JSON.stringify(await donghub.getDetail(detailSlug, { limitEpisodes: detailLimit }), null, 2));
-        break;
-      case "donghubwatch":
-        console.log("[Test] Donghub getWatch...");
-        console.log(JSON.stringify(await donghub.getWatch(input), null, 2));
-        break;
-      case "donghubschedule":
-        console.log("[Test] Donghub getSchedule...");
-        console.log(JSON.stringify(await donghub.getSchedule(), null, 2));
-        break;
-      case "donghubgenres":
-        console.log("[Test] Donghub getGenreList...");
-        console.log(JSON.stringify(await donghub.getGenreList(), null, 2));
-        break;
-      case "donghubgenre":
-        console.log("[Test] Donghub getByGenre...");
-        console.log(JSON.stringify(await donghub.getByGenre(input), null, 2));
-        break;
-
-      // -----------------------------------------------------------------
-      case "lyricssearch":
-        console.log("[Test] Lyrics search...");
-        console.log(JSON.stringify(await lyrics.searchLyrics(input), null, 2));
-        break;
-      case "lyrics":
-        console.log("[Test] Get lyrics...");
-        const lrcRes = await lyrics.getLyrics(input);
-        if (lrcRes.error) {
-          console.log(lrcRes.error);
-        } else {
-          console.log(`Title: ${lrcRes.trackName}`);
-          console.log(`Artist: ${lrcRes.artistName}`);
-          if (lrcRes.albumName) console.log(`Album: ${lrcRes.albumName}`);
-          console.log("----------------------------");
-          console.log(lrcRes.plainLyrics || lrcRes.syncedLyrics || "No lyrics available.");
-        }
-        break;
-      case "lyricsbyid":
-        console.log("[Test] Get lyrics by ID...");
-        const idRes = await lyrics.getLyricsById(input);
-        console.log(JSON.stringify(idRes, null, 2));
-        break;
-      case "lyricsbydetails":
-        console.log("[Test] Get lyrics by details (JSON input)...");
-        // Expecting JSON like: {"artist_name":"Ariis","track_name":"Baby Doll"}
-        let dRaw = input.trim().replace(/^['"]|['"]$/g, "").replace(/'/g, '"');
-        console.log("Raw Details Input:", dRaw);
-        const dParams = JSON.parse(dRaw);
-        const dRes = await lyrics.getLyricsByDetails(dParams);
-        console.log(JSON.stringify(dRes, null, 2));
-        break;
-      case "quranlist":
-        console.log("[Test] Quran NU getListSurah...");
-        console.log(JSON.stringify(await quran.getListSurah(), null, 2));
-        break;
-      case "quran":
-        console.log("[Test] Quran NU getSurah...");
-        console.log(JSON.stringify(await quran.getSurah(input), null, 2));
-        break;
-      case "doalist":
-        console.log("[Test] Quran NU getListDoa...");
-        console.log(JSON.stringify(await quran.getListDoa(), null, 2));
-        break;
-      case "doa":
-        console.log("[Test] Quran NU getDoaDetail...");
-        console.log(JSON.stringify(await quran.getDoaDetail(input), null, 2));
-        break;
-      default:
-        console.log("Fitur tidak dikenal:", command);
-        break;
-    }
-  } catch (e) {
-    console.error(`Gagal menjalankan fitur ${command}:`, e.message || e);
-  }
+// -----------------------------------------------------------------
+// TikTok
+async function testTiktok(url) {
+  console.log("[Test] TikTok Downloader...");
+  return await tiktok(url);
 }
 
-run();
+// -----------------------------------------------------------------
+// Brat (image)
+async function testBrat(text) {
+  console.log("[Test] Brat (Plugin Mode)...");
+  console.log("Catatan: Fitur Brat sekarang menggunakan struktur plugin WhatsApp.");
+  console.log("Mencoba menjalankan handler with mock data...");
+
+  const mockM = { reply: (msg) => console.log("Bot Reply:", msg), chat: "test_chat" };
+  const mockSock = {
+    sendStimg: (chat, buffer, m, metadata) => {
+      const fs = require("fs");
+      fs.writeFileSync("test_brat_plugin.png", buffer);
+      console.log("Sticker berhasil disimpan ke: test_brat_plugin.png");
+      console.log("Metadata:", metadata);
+    },
+  };
+  return await brat(mockM, mockSock, { text: text, prefix: ".", command: "brat" });
+}
+
+// -----------------------------------------------------------------
+// BratVid (video)
+async function testBratVid(text) {
+  console.log("[Test] BratVid (Plugin Mode)...");
+
+  const mockMVid = { reply: (msg) => console.log("Bot Reply:", msg), chat: "test_chat" };
+  const mockSockVid = {
+    sendStimg: (chat, buffer, m, metadata) => {
+      const fs = require("fs");
+      fs.writeFileSync("test_brat_plugin.mp4", buffer);
+      console.log("Video Sticker berhasil disimpan ke: test_brat_plugin.mp4");
+      console.log("Metadata:", metadata);
+    },
+  };
+  return await brat(mockMVid, mockSockVid, { text: text, prefix: ".", command: "bratvid" });
+}
+
+// -----------------------------------------------------------------
+// Animku API
+async function testAnimkuHome() {
+  console.log("[Test] Animku getHome...");
+  return await animku.getHome();
+}
+
+async function testAnimkuDetail(slug) {
+  console.log("[Test] Animku getDetail...");
+  return await animku.getDetail(slug);
+}
+
+async function testAnimkuWatch(slug) {
+  console.log("[Test] Animku getWatch...");
+  return await animku.getWatch(slug);
+}
+
+async function testAnimkuGenre(genre) {
+  console.log("[Test] Animku getGenre...");
+  return await animku.getGenre(genre);
+}
+
+async function testAnimkuSearch(query) {
+  console.log("[Test] Animku search...");
+  return await animku.search(query);
+}
+
+async function testAnimkuDirector(director) {
+  console.log("[Test] Animku getDirector...");
+  return await animku.getDirector(director);
+}
+
+async function testAnimkuProducer(producer) {
+  console.log("[Test] Animku getProducer...");
+  return await animku.getProducer(producer);
+}
+
+async function testAnimkuStudio(studio) {
+  console.log("[Test] Animku getStudio...");
+  return await animku.getStudio(studio);
+}
+
+async function testAnimkuSeason(season) {
+  console.log("[Test] Animku getSeason...");
+  return await animku.getSeason(season);
+}
+
+async function testAnimkuCast(cast) {
+  console.log("[Test] Animku getCast...");
+  return await animku.getCast(cast);
+}
+
+// -----------------------------------------------------------------
+// LK21 API
+async function testLK21Home() {
+  console.log("[Test] LK21 getHome...");
+  return await lk21.getHome();
+}
+
+async function testLK21Search(query) {
+  console.log("[Test] LK21 getSearch...");
+  return await lk21.getSearch(query);
+}
+
+async function testLK21Filter(options) {
+  console.log("[Test] LK21 getFilter...");
+  return await lk21.getFilter(options);
+}
+
+async function testLK21Detail(slug) {
+  console.log("[Test] LK21 getDetail...");
+  return await lk21.getDetail(slug);
+}
+
+async function testLK21DownloadLinks(slug) {
+  console.log("[Test] LK21 getDownloadLinks...");
+  return await lk21.getDownloadLinks(slug);
+}
+
+// -----------------------------------------------------------------
+// Donghub API
+async function testDonghubHome() {
+  console.log("[Test] Donghub getHome...");
+  return await donghub.getHome();
+}
+
+async function testDonghubSearch(query, page = 1) {
+  console.log("[Test] Donghub search...");
+  return await donghub.search(query, { page });
+}
+
+async function testDonghubDetail(slug, limitEpisodes = null) {
+  console.log("[Test] Donghub getDetail...");
+  return await donghub.getDetail(slug, { limitEpisodes });
+}
+
+async function testDonghubWatch(slug) {
+  console.log("[Test] Donghub getWatch...");
+  return await donghub.getWatch(slug);
+}
+
+async function testDonghubSchedule() {
+  console.log("[Test] Donghub getSchedule...");
+  return await donghub.getSchedule();
+}
+
+async function testDonghubGenres() {
+  console.log("[Test] Donghub getGenreList...");
+  return await donghub.getGenreList();
+}
+
+async function testDonghubGenre(genre) {
+  console.log("[Test] Donghub getByGenre...");
+  return await donghub.getByGenre(genre);
+}
+
+// -----------------------------------------------------------------
+// Lyrics API
+async function testLyricsSearch(query) {
+  console.log("[Test] Lyrics search...");
+  return await lyrics.searchLyrics(query);
+}
+
+async function testLyrics(trackId) {
+  console.log("[Test] Get lyrics...");
+  const lrcRes = await lyrics.getLyrics(trackId);
+  if (lrcRes.error) {
+    return { error: lrcRes.error };
+  }
+  return {
+    trackName: lrcRes.trackName,
+    artistName: lrcRes.artistName,
+    albumName: lrcRes.albumName,
+    lyrics: lrcRes.plainLyrics || lrcRes.syncedLyrics || "No lyrics available."
+  };
+}
+
+async function testLyricsById(id) {
+  console.log("[Test] Get lyrics by ID...");
+  return await lyrics.getLyricsById(id);
+}
+
+async function testLyricsByDetails(params) {
+  console.log("[Test] Get lyrics by details...");
+  return await lyrics.getLyricsByDetails(params);
+}
+
+// -----------------------------------------------------------------
+// Quran API
+async function testQuranList() {
+  console.log("[Test] Quran NU getListSurah...");
+  return await quran.getListSurah();
+}
+
+async function testQuran(surahNumber) {
+  console.log("[Test] Quran NU getSurah...");
+  return await quran.getSurah(surahNumber);
+}
+
+async function testDoaList() {
+  console.log("[Test] Quran NU getListDoa...");
+  return await quran.getListDoa();
+}
+
+async function testDoa(id) {
+  console.log("[Test] Quran NU getDoaDetail...");
+  return await quran.getDoaDetail(id);
+}
+
+// -----------------------------------------------------------------
+// Export all test functions
+module.exports = {
+  // TikTok
+  testTiktok,
+  
+  // Brat
+  testBrat,
+  testBratVid,
+  
+  // Animku
+  testAnimkuHome,
+  testAnimkuDetail,
+  testAnimkuWatch,
+  testAnimkuGenre,
+  testAnimkuSearch,
+  testAnimkuDirector,
+  testAnimkuProducer,
+  testAnimkuStudio,
+  testAnimkuSeason,
+  testAnimkuCast,
+  
+  // LK21
+  testLK21Home,
+  testLK21Search,
+  testLK21Filter,
+  testLK21Detail,
+  testLK21DownloadLinks,
+  
+  // Donghub
+  testDonghubHome,
+  testDonghubSearch,
+  testDonghubDetail,
+  testDonghubWatch,
+  testDonghubSchedule,
+  testDonghubGenres,
+  testDonghubGenre,
+  
+  // Lyrics
+  testLyricsSearch,
+  testLyrics,
+  testLyricsById,
+  testLyricsByDetails,
+  
+  // Quran
+  testQuranList,
+  testQuran,
+  testDoaList,
+  testDoa
+};
