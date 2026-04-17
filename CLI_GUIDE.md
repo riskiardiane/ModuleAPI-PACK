@@ -1,70 +1,132 @@
-# Panduan Lengkap Perintah CLI (test.js)
+# Panduan Penggunaan Test Module (test.js)
 
-Gunakan file `test.js` untuk menguji setiap fitur secara langsung melalui terminal. Format dasar perintah adalah:
-`node test.js <fitur> <input>`
+File `test.js` menyediakan fungsi-fungsi test untuk menguji setiap fitur. Import module dan panggil fungsi yang diinginkan.
+
+---
+
+## 🚀 Cara Penggunaan
+
+```javascript
+const test = require('./test');
+
+// Jalankan fungsi test
+(async () => {
+    const result = await test.testDonghubSchedule();
+    console.log(result);
+})();
+```
 
 ---
 
 ## 📥 Downloader & Media
 
-| Fitur | Perintah | Deskripsi |
-| :--- | :--- | :--- |
-| **TikTok** | `node test.js tiktok <url>` | Download video TikTok tanpa watermark. |
-| **Brat (Image)** | `node test.js brat "<teks>"` | Generate stiker teks ala Brat (output: `test_brat_plugin.png`). |
-| **Brat (Video)** | `node test.js bratvid "<teks>"` | Generate video stiker ala Brat (output: `test_brat_plugin.mp4`). |
+| Fitur | Fungsi | Parameter | Contoh |
+| :--- | :--- | :--- | :--- |
+| **TikTok** | `testTiktok(url)` | `url` (string) | `test.testTiktok("https://vt.tiktok.com/xxxx/")` |
+| **Brat (Image)** | `testBrat(text)` | `text` (string) | `test.testBrat("halo dunia")` |
+| **Brat (Video)** | `testBratVid(text)` | `text` (string) | `test.testBratVid("halo dunia")` |
 
 ---
 
 ## 📺 Animku (Anime Scraper)
 
-| Fitur | Perintah | Deskripsi |
-| :--- | :--- | :--- |
-| **Home** | `node test.js animkuhome` | Menampilkan anime terbaru di halaman utama. |
-| **Search** | `node test.js animkusearch "<judul>"` | Mencari anime berdasarkan judul. |
-| **Detail** | `node test.js animkudetail <slug>` | Mendapatkan detail informasi anime. |
-| **Watch** | `node test.js animkuwatch <slug_eps>` | Mendapatkan link streaming episode tertentu. |
-| **Genre** | `node test.js animkugenre <genre>` | Menampilkan daftar anime berdasarkan genre. |
-| **Director** | `node test.js animkudirector <nama>` | Menampilkan anime berdasarkan sutradara. |
-| **Producer** | `node test.js animkuproducer <nama>` | Menampilkan anime berdasarkan produser. |
-| **Studio** | `node test.js animkustudio <nama>` | Menampilkan anime berdasarkan studio. |
-| **Season** | `node test.js animkuseason <season>` | Menampilkan anime berdasarkan musim (mis: winter-2024). |
-| **Cast** | `node test.js animkucast <nama>` | Menampilkan anime berdasarkan pengisi suara. |
+| Fitur | Fungsi | Parameter | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| **Home** | `testAnimkuHome()` | - | Anime terbaru di halaman utama. |
+| **Search** | `testAnimkuSearch(query)` | `query` (string) | Mencari anime berdasarkan judul. |
+| **Detail** | `testAnimkuDetail(slug)` | `slug` (string) | Detail informasi anime. |
+| **Watch** | `testAnimkuWatch(slug_eps)` | `slug_eps` (string) | Link streaming episode tertentu. |
+| **Genre** | `testAnimkuGenre(genre)` | `genre` (string) | Daftar anime berdasarkan genre. |
+| **Director** | `testAnimkuDirector(name)` | `name` (string) | Anime berdasarkan sutradara. |
+| **Producer** | `testAnimkuProducer(name)` | `name` (string) | Anime berdasarkan produser. |
+| **Studio** | `testAnimkuStudio(name)` | `name` (string) | Anime berdasarkan studio. |
+| **Season** | `testAnimkuSeason(season)` | `season` (string) | Anime berdasarkan musim. |
+| **Cast** | `testAnimkuCast(name)` | `name` (string) | Anime berdasarkan pengisi suara. |
 
 ---
 
 ## 🎬 LK21 (Movie Scraper)
 
-| Fitur | Perintah | Deskripsi |
-| :--- | :--- | :--- |
-| **Home** | `node test.js lk21home` | Menampilkan film terbaru di halaman utama. |
-| **Search** | `node test.js lk21search "<judul>"` | Mencari film di LK21. |
-| **Detail** | `node test.js lk21detail <slug>` | Mendapatkan detail informasi film. |
-| **Download** | `node test.js lk21downloadlinks <slug>` | Mendapatkan link download film. |
-| **Filter** | `node test.js lk21filter '{"genre":"action","year":"2023"}'` | Mencari film dengan filter spesifik (format JSON). |
+| Fitur | Fungsi | Parameter | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| **Home** | `testLK21Home()` | - | Film terbaru di halaman utama. |
+| **Search** | `testLK21Search(query)` | `query` (string) | Mencari film di LK21. |
+| **Detail** | `testLK21Detail(slug)` | `slug` (string) | Detail informasi film. |
+| **Download** | `testLK21DownloadLinks(slug)` | `slug` (string) | Link download film. |
+| **Filter** | `testLK21Filter(options)` | `options` (object) | Filter dengan JSON, e.g. `{genre: "action", year: "2023"}` |
+
+---
+
+## 🏮 Donghub (Donghua Scraper)
+
+| Fitur | Fungsi | Parameter | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| **Home** | `testDonghubHome(page?)` | `page` (number, optional) | Anime trending di halaman utama. |
+| **Schedule** | `testDonghubSchedule()` | - | Jadwal rilis harian (Senin-Minggu). |
+| **Genres** | `testDonghubGenres()` | - | List 18 genre tersedia. |
+| **Search** | `testDonghubSearch(query, page?)` | `query` (string), `page` (number, optional) | Mencari donghua. Default page 1. |
+| **Detail** | `testDonghubDetail(slug, limit?)` | `slug` (string), `limit` (number, optional) | Detail + episodes. Default: semua episode. |
+| **Watch** | `testDonghubWatch(slug_ep)` | `slug_ep` (string) | Watch links + download links. |
+| **By Genre** | `testDonghubGenre(genre)` | `genre` (string) | Donghua berdasarkan genre. |
+
+### Contoh Penggunaan Donghub
+
+```javascript
+const test = require('./test');
+
+(async () => {
+    // Jadwal rilis
+    const schedule = await test.testDonghubSchedule();
+    console.log(schedule.monday); // Anime rilis Senin
+
+    // Search dengan pagination
+    const search = await test.testDonghubSearch("perfect world", 1);
+    console.log(search.results);
+
+    // Detail dengan limit 10 episodes
+    const detail = await test.testDonghubDetail("perfect-world", 10);
+    console.log(detail.episodes); // Hanya 10 episode
+    console.log(detail.totalEpisodes); // Total semua episode (63)
+    console.log(detail.episodesLimited); // true
+
+    // Watch
+    const watch = await test.testDonghubWatch("perfect-world-episode-1");
+    console.log(watch.streamUrl);
+})();
+```
 
 ---
 
 ## 🎵 Music (Lyrics Scraper)
 
-| Fitur | Perintah | Deskripsi |
-| :--- | :--- | :--- |
-| **Search** | `node test.js lyricssearch "<judul>"` | Mencari daftar lagu untuk mendapatkan ID. |
-| **Get Lyrics** | `node test.js lyrics "<judul/artis>"` | Mendapatkan lirik lagu secara instan. |
-| **By ID** | `node test.js lyricsbyid <id>` | Mendapatkan lirik berdasarkan ID spesifik. |
-| **By Details** | `node test.js lyricsbydetails '{"artist_name":"Ariis","track_name":"Baby Doll"}'` | Mendapatkan lirik dengan input JSON detail. |
+| Fitur | Fungsi | Parameter | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| **Search** | `testLyricsSearch(query)` | `query` (string) | Mencari daftar lagu untuk mendapatkan ID. |
+| **Get Lyrics** | `testLyrics(trackId)` | `trackId` (string) | Mendapatkan lirik lagu secara instan. |
+| **By ID** | `testLyricsById(id)` | `id` (string) | Lirik berdasarkan ID spesifik. |
+| **By Details** | `testLyricsByDetails(params)` | `params` (object) | Lirik dengan detail, e.g. `{artist_name: "Ariis", track_name: "Baby Doll"}` |
 
 ---
 
 ## 🕋 Islami (Quran & Doa)
 
-| Fitur | Perintah | Deskripsi |
-| :--- | :--- | :--- |
-| **Surah List** | `node test.js quranlist` | Menampilkan daftar 114 Surah. |
-| **Get Surah** | `node test.js quran <nomor_surah>` | Mendapatkan daftar ayat dalam satu surah (Contoh: `quran 1`). |
-| **Doa List** | `node test.js doalist` | Menampilkan daftar doa-doa harian. |
-| **Doa Detail** | `node test.js doa <nomor_doa>` | Mendapatkan teks Arab dan terjemahan doa spesifik. |
+| Fitur | Fungsi | Parameter | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| **Surah List** | `testQuranList()` | - | Daftar 114 Surah. |
+| **Get Surah** | `testQuran(number)` | `number` (number) | Daftar ayat dalam satu surah. |
+| **Doa List** | `testDoaList()` | - | Daftar doa-doa harian. |
+| **Doa Detail** | `testDoa(id)` | `id` (number) | Teks Arab dan terjemahan doa. |
 
 ---
 
-> [!TIP]
-> Jika input mengandung spasi (seperti judul film atau teks brat), pastikan gunakan tanda kutip ganda `"..."`.
+## 💡 Tips
+
+1. **Semua fungsi mengembalikan Promise** - selalu gunakan `await` atau `.then()`
+2. **Parameter opsional** - ditandai dengan tanda tanya `?`, bisa diabaikan
+3. **Pagination** - gunakan parameter `page` untuk navigasi halaman
+4. **Limit Episodes** - gunakan parameter `limit` untuk membatasi jumlah episode
+
+---
+
+> [!NOTE]
+> File `test.js` sekarang berbentuk module exports. Setiap fitur memiliki fungsi test terpisah dengan prefix `test`, contoh: `testDonghubSchedule`, `testAnimkuDetail`, dll.
