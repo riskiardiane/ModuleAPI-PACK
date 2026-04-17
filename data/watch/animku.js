@@ -1,7 +1,5 @@
 const axios = require('axios');
-
 const BASE_URL = 'https://animkuapi.vercel.app';
-
 const AnimkuApi = {
     async getHome() {
         try {
@@ -11,7 +9,6 @@ const AnimkuApi = {
             this._handleError('getHome', error);
         }
     },
-
     async getDetail(slug) {
         try {
             const response = await axios.get(`${BASE_URL}/anime/${slug}`);
@@ -20,7 +17,6 @@ const AnimkuApi = {
             this._handleError('getDetail', error);
         }
     },
-
     async getWatch(slug) {
         try {
             const response = await axios.get(`${BASE_URL}/ntn/${slug}`);
@@ -29,7 +25,6 @@ const AnimkuApi = {
             this._handleError('getWatch', error);
         }
     },
-
     async getGenre(slug, pageNumber = 1) {
         try {
             const response = await axios.get(`${BASE_URL}/genres/${slug}/page/${pageNumber}`);
@@ -38,7 +33,6 @@ const AnimkuApi = {
             this._handleError('getGenre', error);
         }
     },
-
     async search(query, pageNumber = 1) {
         try {
             const response = await axios.get(`${BASE_URL}/search/${pageNumber}/${encodeURIComponent(query)}`);
@@ -47,7 +41,6 @@ const AnimkuApi = {
             this._handleError('search', error);
         }
     },
-
     async getDirector(slug, pageNumber = 1) {
         try {
             const response = await axios.get(`${BASE_URL}/director/${slug}/page/${pageNumber}`);
@@ -56,7 +49,6 @@ const AnimkuApi = {
             this._handleError('getDirector', error);
         }
     },
-
     async getProducer(slug, pageNumber = 1) {
         try {
             const response = await axios.get(`${BASE_URL}/producer/${slug}/page/${pageNumber}`);
@@ -65,7 +57,6 @@ const AnimkuApi = {
             this._handleError('getProducer', error);
         }
     },
-
     async getStudio(slug, pageNumber = 1) {
         try {
             const response = await axios.get(`${BASE_URL}/studio/${slug}/page/${pageNumber}`);
@@ -74,7 +65,6 @@ const AnimkuApi = {
             this._handleError('getStudio', error);
         }
     },
-
     async getSeason(slug) {
         try {
             const response = await axios.get(`${BASE_URL}/season/${slug}`);
@@ -83,7 +73,6 @@ const AnimkuApi = {
             this._handleError('getSeason', error);
         }
     },
-
     async getCast(slug, pageNumber = 1) {
         try {
             const response = await axios.get(`${BASE_URL}/cast/${slug}/page/${pageNumber}`);
@@ -92,7 +81,6 @@ const AnimkuApi = {
             this._handleError('getCast', error);
         }
     },
-
     _handleError(method, error) {
         console.error(`Error in AnimkuApi.${method}:`, error.message);
         throw {
@@ -103,5 +91,4 @@ const AnimkuApi = {
         };
     }
 };
-
 module.exports = AnimkuApi;

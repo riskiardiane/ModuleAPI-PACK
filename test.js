@@ -1,20 +1,12 @@
-// test.js - Test module for all API features
 const { tiktok, brat, animku, lk21, donghub, lyrics, quran } = require("./fitur");
 
-// -----------------------------------------------------------------
-// TikTok
 async function testTiktok(url) {
   console.log("[Test] TikTok Downloader...");
   return await tiktok(url);
 }
 
-// -----------------------------------------------------------------
-// Brat (image)
 async function testBrat(text) {
   console.log("[Test] Brat (Plugin Mode)...");
-  console.log("Catatan: Fitur Brat sekarang menggunakan struktur plugin WhatsApp.");
-  console.log("Mencoba menjalankan handler with mock data...");
-
   const mockM = { reply: (msg) => console.log("Bot Reply:", msg), chat: "test_chat" };
   const mockSock = {
     sendStimg: (chat, buffer, m, metadata) => {
@@ -27,11 +19,8 @@ async function testBrat(text) {
   return await brat(mockM, mockSock, { text: text, prefix: ".", command: "brat" });
 }
 
-// -----------------------------------------------------------------
-// BratVid (video)
 async function testBratVid(text) {
   console.log("[Test] BratVid (Plugin Mode)...");
-
   const mockMVid = { reply: (msg) => console.log("Bot Reply:", msg), chat: "test_chat" };
   const mockSockVid = {
     sendStimg: (chat, buffer, m, metadata) => {
@@ -44,8 +33,6 @@ async function testBratVid(text) {
   return await brat(mockMVid, mockSockVid, { text: text, prefix: ".", command: "bratvid" });
 }
 
-// -----------------------------------------------------------------
-// Animku API
 async function testAnimkuHome() {
   console.log("[Test] Animku getHome...");
   return await animku.getHome();
@@ -96,8 +83,6 @@ async function testAnimkuCast(cast) {
   return await animku.getCast(cast);
 }
 
-// -----------------------------------------------------------------
-// LK21 API
 async function testLK21Home() {
   console.log("[Test] LK21 getHome...");
   return await lk21.getHome();
@@ -123,8 +108,6 @@ async function testLK21DownloadLinks(slug) {
   return await lk21.getDownloadLinks(slug);
 }
 
-// -----------------------------------------------------------------
-// Donghub API
 async function testDonghubHome() {
   console.log("[Test] Donghub getHome...");
   return await donghub.getHome();
@@ -155,13 +138,16 @@ async function testDonghubGenres() {
   return await donghub.getGenreList();
 }
 
-async function testDonghubGenre(genre) {
+async function testDonghubGenre(genre, page = 1) {
   console.log("[Test] Donghub getByGenre...");
-  return await donghub.getByGenre(genre);
+  return await donghub.getByGenre(genre, page);
 }
 
-// -----------------------------------------------------------------
-// Lyrics API
+async function testDonghubFilter(options) {
+  console.log("[Test] Donghub getAnimeList (Filter)...");
+  return await donghub.getAnimeList(options);
+}
+
 async function testLyricsSearch(query) {
   console.log("[Test] Lyrics search...");
   return await lyrics.searchLyrics(query);
@@ -191,8 +177,6 @@ async function testLyricsByDetails(params) {
   return await lyrics.getLyricsByDetails(params);
 }
 
-// -----------------------------------------------------------------
-// Quran API
 async function testQuranList() {
   console.log("[Test] Quran NU getListSurah...");
   return await quran.getListSurah();
@@ -213,17 +197,10 @@ async function testDoa(id) {
   return await quran.getDoaDetail(id);
 }
 
-// -----------------------------------------------------------------
-// Export all test functions
 module.exports = {
-  // TikTok
   testTiktok,
-  
-  // Brat
   testBrat,
   testBratVid,
-  
-  // Animku
   testAnimkuHome,
   testAnimkuDetail,
   testAnimkuWatch,
@@ -234,15 +211,11 @@ module.exports = {
   testAnimkuStudio,
   testAnimkuSeason,
   testAnimkuCast,
-  
-  // LK21
   testLK21Home,
   testLK21Search,
   testLK21Filter,
   testLK21Detail,
   testLK21DownloadLinks,
-  
-  // Donghub
   testDonghubHome,
   testDonghubSearch,
   testDonghubDetail,
@@ -250,16 +223,124 @@ module.exports = {
   testDonghubSchedule,
   testDonghubGenres,
   testDonghubGenre,
-  
-  // Lyrics
+  testDonghubFilter,
   testLyricsSearch,
   testLyrics,
   testLyricsById,
   testLyricsByDetails,
-  
-  // Quran
   testQuranList,
   testQuran,
   testDoaList,
   testDoa
 };
+
+if (require.main === module) {
+  const args = process.argv.slice(2);
+  let command = args[0];
+  let p1 = args[1];
+  let p2 = args[2];
+  let p3 = args[3];
+
+  if (!command) {
+    console.log("🚀 =========================================== 🚀");
+    console.log("       ModuleAPI-PACK CLI Tester v2.0         ");
+    console.log("🚀 =========================================== 🚀");
+    console.log("\nPenggunaan: node test.js <command> [params...]");
+    
+    console.log("\n📌 [DONGHUA SHORTCUTS]");
+    console.log("  - node test.js donghua home [page]");
+    console.log("  - node test.js donghua search \"soul land\"");
+    console.log("  - node test.js donghua detail \"slug\"");
+    console.log("  - node test.js donghua watch \"slug-eps\"");
+    console.log("  - node test.js donghua schedule");
+    console.log("  - node test.js donghua genres");
+
+    console.log("\n📌 [OTHER SHORTCUTS]");
+    console.log("  - node test.js tiktok <url>");
+    console.log("  - node test.js brat \"text\"");
+    console.log("  - node test.js bratvid \"text\"");
+    console.log("  - node test.js lyrics \"query\"");
+    console.log("  - node test.js quran <surah_number>");
+
+    console.log("\n📌 [LEGACY MODE]");
+    console.log("  - node test.js testDonghubSearch \"soul land\"");
+    console.log("  - node test.js testAnimkuHome");
+    process.exit(0);
+  }
+
+  const shortcuts = {
+    donghua: {
+      home: 'testDonghubHome',
+      search: 'testDonghubSearch',
+      detail: 'testDonghubDetail',
+      watch: 'testDonghubWatch',
+      schedule: 'testDonghubSchedule',
+      genres: 'testDonghubGenres',
+      genre: 'testDonghubGenre'
+    },
+    donghub: 'donghua',
+    tiktok: 'testTiktok',
+    lyrics: {
+      search: 'testLyricsSearch',
+      get: 'testLyrics',
+      id: 'testLyricsById',
+      detail: 'testLyricsByDetails'
+    },
+    quran: {
+      list: 'testQuranList',
+      surah: 'testQuran',
+      doa: 'testDoa',
+      doalist: 'testDoaList'
+    },
+    brat: 'testBrat',
+    bratvid: 'testBratVid',
+    animku: {
+      home: 'testAnimkuHome',
+      search: 'testAnimkuSearch',
+      detail: 'testAnimkuDetail',
+      watch: 'testAnimkuWatch'
+    },
+    lk21: {
+      home: 'testLK21Home',
+      search: 'testLK21Search',
+      detail: 'testLK21Detail',
+      download: 'testLK21DownloadLinks'
+    }
+  };
+
+  if (shortcuts[command]) {
+    let target = shortcuts[command];
+    if (typeof target === 'string' && shortcuts[target]) target = shortcuts[target];
+
+    if (typeof target === 'object') {
+      const sub = (p1 || 'home').toLowerCase();
+      if (target[sub]) {
+        command = target[sub];
+        p1 = p2;
+        p2 = p3;
+        p3 = args[4];
+      }
+    } else {
+      command = target;
+    }
+  }
+
+  const fn = module.exports[command];
+  if (typeof fn === 'function') {
+    (async () => {
+      try {
+        let param1 = p1;
+        if (p1 && (p1.startsWith('{') || p1.startsWith('['))) {
+          try { param1 = JSON.parse(p1); } catch (e) { }
+        }
+        const result = await fn(param1, p2, p3);
+        console.log(JSON.stringify(result, null, 2));
+      } catch (err) {
+        console.error("❌ Execution Error:", err.message || err);
+      }
+    })();
+  } else {
+    console.log(`❌ Command '${command}' tidak ditemukan.`);
+    console.log("Ketik 'node test.js' tanpa parameter untuk melihat daftar perintah.");
+  }
+}

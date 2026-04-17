@@ -6,6 +6,54 @@ File `test.js` menyediakan fungsi-fungsi test untuk menguji setiap fitur. Import
 
 ## 🚀 Cara Penggunaan
 
+Kamu bisa menjalankan test langsung melalui terminal dengan fitur **Shortcut CLI** atau menggunakan mode manual.
+
+### 1. Menggunakan Shortcut (Rekomendasi)
+
+Sekarang kamu bisa menggunakan perintah yang lebih pendek:
+
+```bash
+# Donghua (Donghub)
+node test.js donghua home
+node test.js donghua search "perfect world"
+node test.js donghua detail "perfect-world"
+node test.js donghua watch "renegade-immortal-episode-137-subtitle-indonesia"
+node test.js donghua schedule
+node test.js donghua genres
+node test.js donghua genre action 2
+
+# Anime (Animku)
+node test.js animku home
+node test.js animku search "naruto"
+node test.js animku detail "boruto-two-blue-vortex"
+node test.js animku watch "slug-eps"
+
+# Movie (LK21)
+node test.js lk21 home
+node test.js lk21 search "avengers"
+node test.js lk21 detail "slug-film"
+node test.js lk21 download "slug-film"
+
+# Music (Lyrics)
+node test.js lyrics search "perfect ed sheeran"
+node test.js lyrics get "perfect ed sheeran"
+node test.js lyrics id 3481024
+node test.js lyrics detail "{\"artist_name\":\"Ariis\",\"track_name\":\"Baby Doll\"}"
+
+# Islami (Quran & Doa)
+node test.js quran surah 1
+node test.js quran list
+node test.js quran doa 1
+node test.js quran doalist
+
+# Downloader & Sticker
+node test.js tiktok <url>
+node test.js brat "halo dunia"
+node test.js bratvid "video teks"
+```
+
+### 2. Menggunakan Module (Manual)
+
 ```javascript
 const test = require('./test');
 

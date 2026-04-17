@@ -1,8 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-
 const BASE_URL = 'https://tv10.lk21official.cc';
-
 const client = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -21,13 +19,11 @@ const client = axios.create({
     'Connection': 'keep-alive'
   }
 });
-
 function checkCloudflare($) {
   if ($('title').text().includes('Just a moment...') || $('title').text().includes('Cloudflare')) {
     console.warn('⚠️ Warning: request blocked by Cloudflare verification.');
   }
 }
-
 function parseArticles(elements, $) {
   const results = [];
   elements.each((i, el) => {
@@ -51,7 +47,6 @@ function parseArticles(elements, $) {
   });
   return results;
 }
-
 async function getHome() {
   try {
     const { data } = await client.get('/');
@@ -72,7 +67,6 @@ async function getHome() {
     throw error;
   }
 }
-
 async function getSearch(query) {
   try {
     const { data } = await client.get('/', { params: { s: query } });
@@ -84,7 +78,6 @@ async function getSearch(query) {
     throw error;
   }
 }
-
 async function getFilter(options = {}) {
   try {
     const { order = 'latest', type = '', genre1 = '', genre2 = '', country = '', year = '', page = 1 } = options;
@@ -104,7 +97,6 @@ async function getFilter(options = {}) {
     throw error;
   }
 }
-
 async function getDetail(url) {
   try {
     if (!url.startsWith('http')) url = `${BASE_URL}${url}`;
@@ -223,7 +215,6 @@ async function getDetail(url) {
     throw error;
   }
 }
-
 async function getDownloadLinks(slug, config = {}) {
   try {
     const { userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36',
@@ -265,7 +256,6 @@ async function getDownloadLinks(slug, config = {}) {
     throw error;
   }
 }
-
 module.exports = {
   getHome,
   getSearch,

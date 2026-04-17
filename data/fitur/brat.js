@@ -2,13 +2,6 @@ const { bratGen } = require("brat-canvas");
 const { bratVid } = require("brat-canvas/video");
 const ffmpegPath = require("ffmpeg-static");
 process.env.PATH = `${require("path").dirname(ffmpegPath)}${require("path").delimiter}${process.env.PATH}`;
-
-/**
- * Core function to generate Brat sticker (image or video)
- * @param {string} text - The input text
- * @param {string} command - The command type ('brat' or 'bratvid')
- * @returns {Promise<Buffer>}
- */
 async function generateBrat(text, command = "brat") {
     try {
         if (command === "bratvid") {
@@ -25,25 +18,17 @@ async function generateBrat(text, command = "brat") {
         throw new Error(e.message || e);
     }
 }
-
-/**
- * Bot Plugin Handler
- */
 const handler = async (m, sock, { text, prefix, command }) => {
     if (!text) return m.reply(`- Ex: *${prefix + command}*`);
-
     await m.reply("Sedang memproses...");
-
     try {
         const buffer = await generateBrat(text, command);
-
         await sock.sendStimg(
             m.chat,
             buffer,
             m,
             { packname: "ApiRizz", author: "apirizz.my.id" }
         );
-
     } catch (e) {
         console.error(e);
         let msg = "❌ Gagal membuat sticker Brat.";
@@ -55,7 +40,5 @@ const handler = async (m, sock, { text, prefix, command }) => {
         m.reply(msg);
     }
 }
-
 handler.command = ["brat", "bratvid"]
-
 module.exports = handler
