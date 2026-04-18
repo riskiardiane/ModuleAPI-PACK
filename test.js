@@ -1,4 +1,4 @@
-const { tiktok, brat, animku, lk21, donghub, lyrics, quran, komikmama, meionovels, spotify, komikindo, removebg } = require("./fitur");
+const { tiktok, brat, animku, lk21, donghub, lyrics, quran, komikmama, meionovels, spotify, komikindo, cnn, removebg } = require("./fitur");
 
 async function testTiktok(url) {
   console.log("[Test] TikTok Downloader...");
@@ -312,6 +312,26 @@ async function testKomikindoByGenre(slug, page) {
   return await komikindo.getByGenre(slug, page);
 }
 
+async function testCnnHome() {
+  console.log("[Test] CNN Home...");
+  return await cnn.home();
+}
+
+async function testCnnRead(url) {
+  console.log("[Test] CNN Read...");
+  return await cnn.read(url);
+}
+
+async function testCnnSearch(query, page) {
+  console.log("[Test] CNN Search...");
+  return await cnn.search(query, page);
+}
+
+async function testCnnVideo(url) {
+  console.log("[Test] CNN Video...");
+  return await cnn.video(url);
+}
+
 async function testSpotify(url) {
   console.log("[Test] Spotify Downloader...");
   return await spotify(url);
@@ -385,6 +405,10 @@ module.exports = {
   testKomikindoManhwa,
   testKomikindoManhua,
   testKomikindoByGenre,
+  testCnnHome,
+  testCnnRead,
+  testCnnSearch,
+  testCnnVideo,
   testSpotify,
   testRemoveBg
 };
@@ -450,6 +474,10 @@ if (require.main === module) {
     console.log("  - node test.js spotify \"https://open.spotify.com/track/xxx\"");
     console.log("  - node test.js removebg <path_atau_url>");
     console.log("  - node test.js quran <surah_number>");
+    console.log("  - node test.js cnn home");
+    console.log("  - node test.js cnn read \"url\"");
+    console.log("  - node test.js cnn search \"query\"");
+    console.log("  - node test.js cnn video \"url\"");
 
     console.log("\n📌 [LEGACY MODE]");
     console.log("  - node test.js testDonghubSearch \"soul land\"");
@@ -531,6 +559,12 @@ if (require.main === module) {
       manhwa: 'testKomikindoManhwa',
       manhua: 'testKomikindoManhua',
       genre: 'testKomikindoByGenre'
+    },
+    cnn: {
+      home: 'testCnnHome',
+      read: 'testCnnRead',
+      search: 'testCnnSearch',
+      video: 'testCnnVideo'
     }
   };
 

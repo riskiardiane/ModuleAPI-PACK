@@ -14,6 +14,7 @@ Koleksi API Scraper modular yang powerful untuk berbagai kebutuhan, mulai dari d
 | **Musik** | Lyrics | Cari lirik lagu secara akurat berdasarkan judul atau artis. |
 | **Islami** | Quran & Doa | Daftar surah, ayat, dan doa-doa harian dari Quran NU. |
 | **Komik** | KomikMama | Scraper komik (Manga, Manhwa, Manhua) |
+| **News** | CNN Indonesia | Scraper berita lengkap (Headline, Search, Read, Video Stream). |
 | **AI Feature** | Remove Background | Menghapus background gambar menggunakan AI offline (Tanpa API Key). |
 
 ## 🛠️ Instalasi
@@ -150,6 +151,15 @@ const anime = await test.testAnimkuDetail("naruto");
 | Method | Parameter | Return |
 |--------|-----------|--------|
 | `remove(imageInput)` | Buffer, URL, or Path | PNG Buffer (No Background) |
+
+### CNN Indonesia (News Scraper)
+
+| Method | Parameter | Return |
+|--------|-----------|--------|
+| `home()` | - | Headline, populer, terbaru, dan video |
+| `read(url)` | article URL | Detail berita, isi bersih, dan galeri gambar |
+| `search(query, page?)` | query, page optional | Hasil cari dengan info tipe konten |
+| `video(url)` | video URL | Detail video dan direct link m3u8 |
 
 ## 📝 Kontribusi
 

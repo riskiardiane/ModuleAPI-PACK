@@ -9,6 +9,7 @@ const komikmama = require("./data/read/komikmama");
 const meionovels = require("./data/read/meionovels");
 const spotify = require("./data/downloader/spotify");
 const komikindo = require("./data/read/komikindo");
+const cnn = require("./data/read/cnn");
 const removebg = require("./images/removebg");
 
 module.exports = {
@@ -23,5 +24,6 @@ module.exports = {
   meionovels,
   spotify,
   komikindo,
+  cnn,
   removebg
 };

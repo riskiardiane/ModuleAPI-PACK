@@ -81,6 +81,12 @@ node test.js spotify <url_atau_judul>
 node test.js removebg <path_atau_url>
 node test.js brat "halo dunia"
 node test.js bratvid "video teks"
+
+# CNN Indonesia (News)
+node test.js cnn home
+node test.js cnn read "https://www.cnnindonesia.com/olahraga/20260418234848-142-1349559/kurniawan-pastikan-mierza-bisa-main-lawan-vietnam"
+node test.js cnn search "sepak bola" 1
+node test.js cnn video "https://www.cnnindonesia.com/tv/20260418192247-407-1348675/video-timnas-garuda-muda-siap-hadapi-malaysia"
 ```
 
 ### 2. Menggunakan Module (Manual)
@@ -239,6 +245,17 @@ const test = require('./test');
 | **Reading** | `testMeionovelsChapter(url)` | `url` (string) | Isi teks novel dan navigasi prev/next. |
 | **Genres** | `testMeionovelsGenres()` | - | Daftar kategori genre yang tersedia. |
 | **By Genre** | `testMeionovelsByGenre(slug, p)` | `slug` (str), `page` (num) | Daftar novel per genre (E.g. action). |
+
+---
+
+## 📰 CNN Indonesia (News Scraper)
+
+| Fitur | Fungsi | Parameter | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| **Home** | `testCnnHome()` | - | Headline, berita populer, berita terbaru, dan video. |
+| **Read** | `testCnnRead(url)` | `url` (string) | Membaca artikel lengkap termasuk gambar galeri. |
+| **Search** | `testCnnSearch(q, p)` | `query` (str), `page` (num) | Cari berita dengan pagination & info tipe konten. |
+| **Video** | `testCnnVideo(url)` | `url` (string) | Ekstraksi direct link streaming m3u8 dari video. |
 
 ---
 
