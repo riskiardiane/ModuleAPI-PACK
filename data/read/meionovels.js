@@ -240,11 +240,11 @@ async function search(query, page = 1) {
         const $ = cheerio.load(data);
         const results = [];
 
-        $('.c-tabs-item__content').each((i, el) => {
-            const title = $(el).find('.post-title h3 a').text().trim();
-            const url = $(el).find('.post-title h3 a').attr('href');
+        $('.c-tabs-item__content .row.c-tabs-item__content').each((i, el) => {
+            const title = $(el).find('.post-title h3 a, .post-title a').first().text().trim();
+            const url = $(el).find('.post-title h3 a, .post-title a').first().attr('href');
             const thumb = getImg($(el).find('.tab-thumb img'), $);
-            const latestChapter = $(el).find('.latest-chap .chapter a').text().trim();
+            const latestChapter = $(el).find('.font-meta.chapter a, .latest-chap a, .latest-chap .chapter a').first().text().trim();
 
             if (url) {
                 results.push({ 
@@ -256,6 +256,20 @@ async function search(query, page = 1) {
                 });
             }
         });
+
+        // Fallback for different search layouts
+        if (results.length === 0) {
+            $('.c-tabs-item__content').each((i, el) => {
+                const title = $(el).find('.post-title h3 a, .post-title a').first().text().trim();
+                const url = $(el).find('.post-title h3 a, .post-title a').first().attr('href');
+                const thumb = getImg($(el).find('.tab-thumb img'), $);
+                const latestChapter = $(el).find('.font-meta.chapter a, .latest-chap a, .latest-chap .chapter a').first().text().trim();
+
+                if (url && results.filter(r => r.url === url).length === 0) {
+                    results.push({ title, url, slug: extractSlug(url), thumb, latestChapter });
+                }
+            });
+        }
 
         return { status: true, data: results };
     } catch (error) {
