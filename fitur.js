@@ -9,6 +9,7 @@ const komikmama = require("./data/read/komikmama");
 const meionovels = require("./data/read/meionovels");
 const spotify = require("./data/downloader/spotify");
 const komikindo = require("./data/read/komikindo");
+const removebg = require("./images/removebg");
 
 module.exports = {
   tiktok: tiktokdl2,
@@ -21,5 +22,6 @@ module.exports = {
   komikmama,
   meionovels,
   spotify,
-  komikindo
+  komikindo,
+  removebg
 };

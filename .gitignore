@@ -3,3 +3,8 @@ node_modules/
 .env
 scratch/
 *.log
+*.png
+*.mp4
+test-ui-removebg/node_modules/
+dist/
+build/

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Background Remover</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Magic <span>Eraser</span></h1>
+            <p>Remove backgrounds instantly using local AI power.</p>
+        </header>
+
+        <main>
+            <div class="card glass">
+                <div class="upload-area" id="drop-zone">
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <div class="upload-icon">✨</div>
+                    <p>Click or drag image here</p>
+                    <span>Supports JPG, PNG, WebP</span>
+                </div>
+
+                <div class="preview-container" id="preview-container" style="display: none;">
+                    <div class="comparison">
+                        <div class="image-box">
+                            <span>Original</span>
+                            <img id="original-preview" src="" alt="Original">
+                        </div>
+                        <div class="arrow">➜</div>
+                        <div class="image-box">
+                            <span>Result</span>
+                            <div id="loading" class="loader-container" style="display: none;">
+                                <div class="loader"></div>
+                                <p>Processing...</p>
+                            </div>
+                            <img id="result-preview" src="" alt="Result" style="display: none;">
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <button id="reset-btn" class="btn secondary">Try Another</button>
+                        <a id="download-btn" class="btn primary" style="display: none;">Download PNG</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 AI Scraper Labs. Built with local ML model.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

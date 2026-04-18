@@ -13,7 +13,8 @@ Koleksi API Scraper modular yang powerful untuk berbagai kebutuhan, mulai dari d
 | **Movie** | LK21 | Informasi film, filter kategori, hingga ekstraksi link download dari LK21. |
 | **Musik** | Lyrics | Cari lirik lagu secara akurat berdasarkan judul atau artis. |
 | **Islami** | Quran & Doa | Daftar surah, ayat, dan doa-doa harian dari Quran NU. |
-| **Komik** | KomikMama | Scraper komik (Manga, Manhwa, Manhua) dari KomikMama.online. |
+| **Komik** | KomikMama | Scraper komik (Manga, Manhwa, Manhua) |
+| **AI Feature** | Remove Background | Menghapus background gambar menggunakan AI offline (Tanpa API Key). |
 
 ## 🛠️ Instalasi
 
@@ -35,7 +36,7 @@ Pastikan Anda sudah menginstal [Node.js](https://nodejs.org/).
 ### 1. Import sebagai Module (Rekomendasi)
 
 ```javascript
-const { tiktok, brat, animku, donghub, lk21, lyrics, quran } = require("./fitur");
+const { tiktok, brat, animku, removebg, lk21, lyrics } = require("./fitur");
 
 // Contoh: Donghub - Jadwal rilis
 async function getSchedule() {
@@ -47,6 +48,12 @@ async function getSchedule() {
 async function getSurah() {
     const data = await quran.getSurah(1);
     console.log(data);
+}
+
+// Contoh: AI - Remove Background
+async function removeBg() {
+    const buffer = await removebg.remove("./image.jpg");
+    require("fs").writeFileSync("out.png", buffer);
 }
 ```
 
@@ -137,6 +144,12 @@ const anime = await test.testAnimkuDetail("naruto");
 | `genres()` | - | All genre categories |
 | `getByGenre(slug, page?)` | genre slug, page optional | Comics by genre |
 | `getFilter({genre, status, type, order, page})` | filter object | Advanced filter results |
+
+### AI Features (Remove Background)
+
+| Method | Parameter | Return |
+|--------|-----------|--------|
+| `remove(imageInput)` | Buffer, URL, or Path | PNG Buffer (No Background) |
 
 ## 📝 Kontribusi
 

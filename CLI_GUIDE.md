@@ -75,9 +75,10 @@ node test.js komikindo manhwa [page]
 node test.js komikindo manhua [page]
 node test.js komikindo genre martial-arts 2
 
-# Downloader & Sticker
+# Downloader, Sticker & AI
 node test.js tiktok <url>
 node test.js spotify <url_atau_judul>
+node test.js removebg <path_atau_url>
 node test.js brat "halo dunia"
 node test.js bratvid "video teks"
 ```
@@ -104,6 +105,7 @@ const test = require('./test');
 | **Brat (Image)** | `testBrat(text)` | `text` (string) | `test.testBrat("halo dunia")` |
 | **Brat (Video)** | `testBratVid(text)` | `text` (string) | `test.testBratVid("halo dunia")` |
 | **Spotify** | `testSpotify(url)` | `url` (string) | `test.testSpotify("https://open.spotify.com/track/xxx")` |
+| **RemoveBG** | `testRemoveBg(input)` | `path/url/buffer` | `test.testRemoveBg("./img.jpg")` |
 
 ---
 
