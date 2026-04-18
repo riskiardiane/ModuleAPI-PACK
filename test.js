@@ -1,4 +1,4 @@
-const { tiktok, brat, animku, lk21, donghub, lyrics, quran, komikmama, meionovels, spotify } = require("./fitur");
+const { tiktok, brat, animku, lk21, donghub, lyrics, quran, komikmama, meionovels, spotify, komikindo } = require("./fitur");
 
 async function testTiktok(url) {
   console.log("[Test] TikTok Downloader...");
@@ -101,11 +101,6 @@ async function testLK21Filter(options) {
 async function testLK21Detail(slug) {
   console.log("[Test] LK21 getDetail...");
   return await lk21.getDetail(slug);
-}
-
-async function testLK21DownloadLinks(slug) {
-  console.log("[Test] LK21 getDownloadLinks...");
-  return await lk21.getDownloadLinks(slug);
 }
 
 async function testDonghubHome() {
@@ -262,6 +257,61 @@ async function testMeionovelsByGenre(slug, page) {
   return await meionovels.getByGenre(slug, page);
 }
 
+async function testKomikindoHome() {
+  console.log("[Test] Komikindo home...");
+  return await komikindo.home();
+}
+
+async function testKomikindoSearch(query, page) {
+  console.log("[Test] Komikindo search...");
+  return await komikindo.search(query, page);
+}
+
+async function testKomikindoDetail(url) {
+  console.log("[Test] Komikindo detail...");
+  return await komikindo.detail(url);
+}
+
+async function testKomikindoChapter(url) {
+  console.log("[Test] Komikindo chapter...");
+  return await komikindo.chapter(url);
+}
+
+async function testKomikindoLatest(page) {
+  console.log("[Test] Komikindo latest...");
+  return await komikindo.latest(page);
+}
+
+async function testKomikindoColored(page) {
+  console.log("[Test] Komikindo colored...");
+  return await komikindo.colored(page);
+}
+
+async function testKomikindoMangaList(page) {
+  console.log("[Test] Komikindo manga list...");
+  return await komikindo.mangaList(page);
+}
+
+async function testKomikindoManga(page) {
+  console.log("[Test] Komikindo manga...");
+  return await komikindo.manga(page);
+}
+
+async function testKomikindoManhwa(page) {
+  console.log("[Test] Komikindo manhwa...");
+  return await komikindo.manhwa(page);
+}
+
+async function testKomikindoManhua(page) {
+  console.log("[Test] Komikindo manhua...");
+  return await komikindo.manhua(page);
+}
+
+async function testKomikindoByGenre(slug, page) {
+  console.log("[Test] Komikindo by genre...");
+  return await komikindo.getByGenre(slug, page);
+}
+
 async function testSpotify(url) {
   console.log("[Test] Spotify Downloader...");
   return await spotify(url);
@@ -285,7 +335,6 @@ module.exports = {
   testLK21Search,
   testLK21Filter,
   testLK21Detail,
-  testLK21DownloadLinks,
   testDonghubHome,
   testDonghubSearch,
   testDonghubDetail,
@@ -315,6 +364,17 @@ module.exports = {
   testMeionovelsChapter,
   testMeionovelsGenres,
   testMeionovelsByGenre,
+  testKomikindoHome,
+  testKomikindoSearch,
+  testKomikindoDetail,
+  testKomikindoChapter,
+  testKomikindoLatest,
+  testKomikindoColored,
+  testKomikindoMangaList,
+  testKomikindoManga,
+  testKomikindoManhwa,
+  testKomikindoManhua,
+  testKomikindoByGenre,
   testSpotify
 };
 
@@ -349,6 +409,19 @@ if (require.main === module) {
     console.log("  - node test.js komikmama genres");
     console.log("  - node test.js genre \"martial-arts\" [page]");
     console.log("  - node test.js komikmama filter <genre_id> <status> <type> <order> [page]");
+
+    console.log("\n📌 [KOMIKINDO SHORTCUTS]");
+    console.log("  - node test.js komikindo home");
+    console.log("  - node test.js komikindo search \"query\" [page]");
+    console.log("  - node test.js komikindo detail \"url\"");
+    console.log("  - node test.js komikindo chapter \"url\"");
+    console.log("  - node test.js komikindo latest [page]");
+    console.log("  - node test.js komikindo colored [page]");
+    console.log("  - node test.js komikindo mangalist [page]");
+    console.log("  - node test.js komikindo manga [page]");
+    console.log("  - node test.js komikindo manhwa [page]");
+    console.log("  - node test.js komikindo manhua [page]");
+    console.log("  - node test.js komikindo genre \"slug\" [page]");
 
     console.log("\n📌 [MEIONOVELS SHORTCUTS]");
     console.log("  - node test.js meionovels home");
@@ -408,8 +481,7 @@ if (require.main === module) {
     lk21: {
       home: 'testLK21Home',
       search: 'testLK21Search',
-      detail: 'testLK21Detail',
-      download: 'testLK21DownloadLinks'
+      detail: 'testLK21Detail'
     },
     komikmama: {
       home: 'testKomikMamaHome',
@@ -431,6 +503,20 @@ if (require.main === module) {
       reading: 'testMeionovelsChapter',
       genres: 'testMeionovelsGenres',
       genre: 'testMeionovelsByGenre'
+    },
+    komikindo: {
+      home: 'testKomikindoHome',
+      search: 'testKomikindoSearch',
+      detail: 'testKomikindoDetail',
+      chapter: 'testKomikindoChapter',
+      reading: 'testKomikindoChapter',
+      latest: 'testKomikindoLatest',
+      colored: 'testKomikindoColored',
+      mangalist: 'testKomikindoMangaList',
+      manga: 'testKomikindoManga',
+      manhwa: 'testKomikindoManhwa',
+      manhua: 'testKomikindoManhua',
+      genre: 'testKomikindoByGenre'
     }
   };
 

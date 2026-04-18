@@ -127,6 +127,7 @@ async function home() {
 
 async function detail(url) {
     try {
+        if (!url.startsWith('http')) url = `${BASE_URL}/novel/${url}/`;
         const { data } = await axios.get(url, { headers: HEADERS });
         const $ = cheerio.load(data);
 
@@ -211,6 +212,11 @@ async function detail(url) {
 
 async function chapter(url) {
     try {
+        if (!url.startsWith('http')) {
+            // we can't reliably guess the full URL just from slug for chapter, but we can try if it's formatted like /novel/...
+            if (url.includes('/novel/')) url = `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+            else return { status: false, message: 'Harap gunakan URL lengkap untuk chapter meionovels.' };
+        }
         const { data } = await axios.get(url, { headers: HEADERS });
         const $ = cheerio.load(data);
 

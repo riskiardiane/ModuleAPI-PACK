@@ -17,22 +17,21 @@ Sekarang kamu bisa menggunakan perintah yang lebih pendek:
 node test.js donghua home
 node test.js donghua search "perfect world"
 node test.js donghua detail "perfect-world"
-node test.js donghua watch "renegade-immortal-episode-137-subtitle-indonesia"
+node test.js donghua watch "renegade-immortal-episode-135-subtitle-indonesia"
 node test.js donghua schedule
 node test.js donghua genres
 node test.js donghua genre action 2
 
 # Anime (Animku)
 node test.js animku home
-node test.js animku search "naruto"
-node test.js animku detail "boruto-two-blue-vortex"
-node test.js animku watch "slug-eps"
+node test.js animku search "a"
+node test.js animku detail "tensei-shitara-slime-datta-ken-4th-season"
+node test.js animku watch "tensei-shitara-slime-datta-ken-4th-season-episode-3-subtitle-indonesia"
 
 # Movie (LK21)
 node test.js lk21 home
 node test.js lk21 search "avengers"
-node test.js lk21 detail "slug-film"
-node test.js lk21 download "slug-film"
+node test.js lk21 detail "thrash-2026"
 
 # Music (Lyrics)
 node test.js lyrics search "perfect ed sheeran"
@@ -41,27 +40,40 @@ node test.js lyrics id 3481024
 node test.js lyrics detail "{\"artist_name\":\"Ariis\",\"track_name\":\"Baby Doll\"}"
 
 # Islami (Quran & Doa)
-node test.js quran surah 1
+node test.js quran surah al-fatihah
 node test.js quran list
-node test.js quran doa 1
+node test.js quran doa doa-haji-umrah
 node test.js quran doalist
 
 # Komik (KomikMama)
 node test.js komikmama home
-node test.js komikmama search "one piece"
+node test.js komikmama search "a"
 node test.js komikmama detail "https://komikmama.online/komik/one-piece/"
 node test.js komikmama reading "https://komikmama.online/one-piece-chapter-1174-bahasa-indonesia/"
 node test.js komikmama genres
-node test.js genre martial-arts 2
+node test.js komikmama martial-arts 2
 node test.js komikmama filter 11 ongoing manhwa update 1
 
 # Meionovels (MeioNovel)
 node test.js meionovels home
-node test.js meionovels search "query" [page]
-node test.js meionovels detail "url"
-node test.js meionovels chapter "url"
+node test.js meionovels search "a" [page]
+node test.js meionovels detail "seni-pembalasan-sang-iblis-perempuan"
+node test.js meionovels chapter "https://meionovels.com/novel/anak-cahaya/chapter-357/"
 node test.js meionovels genres
 node test.js meionovels genre "action" [page]
+
+# Komikindo
+node test.js komikindo home
+node test.js komikindo search "a"
+node test.js komikindo detail "https://komikindo.ch/komik/a-princess-who-reads-fortune/"
+node test.js komikindo chapter "https://komikindo.ch/a-princess-who-reads-fortune-chapter-2/"
+node test.js komikindo latest [page]
+node test.js komikindo colored [page]
+node test.js komikindo mangalist [page]
+node test.js komikindo manga [page]
+node test.js komikindo manhwa [page]
+node test.js komikindo manhua [page]
+node test.js komikindo genre martial-arts 2
 
 # Downloader & Sticker
 node test.js tiktok <url>
@@ -119,7 +131,6 @@ const test = require('./test');
 | **Home** | `testLK21Home()` | - | Film terbaru di halaman utama. |
 | **Search** | `testLK21Search(query)` | `query` (string) | Mencari film di LK21. |
 | **Detail** | `testLK21Detail(slug)` | `slug` (string) | Detail informasi film. |
-| **Download** | `testLK21DownloadLinks(slug)` | `slug` (string) | Link download film. |
 | **Filter** | `testLK21Filter(options)` | `options` (object) | Filter dengan JSON, e.g. `{genre: "action", year: "2023"}` |
 
 ---
@@ -197,6 +208,24 @@ const test = require('./test');
 | **Genres** | `testKomikMamaGenres()` | - | Daftar semua kategori genre & jumlah komik. |
 | **By Genre** | `testKomikMamaByGenre(slug, p)` | `slug` (str), `page` (num) | Daftar komik per genre (E.g. martial-arts). |
 | **Filter** | `testKomikMamaFilter(g, s, t, o, p)` | ID/string (multiple) | Filter canggih (Genre ID, Status, Tipe, Order). |
+
+## 🇮🇩 Komikindo (Manga Scraper)
+
+| Fitur | Fungsi | Parameter | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| **Home** | `testKomikindoHome()` | - | Komik terbaru, popular, slider. |
+| **Search** | `testKomikindoSearch(q, p)` | `query` (str), `page` (num) | Cari komik dengan pagination. |
+| **Detail** | `testKomikindoDetail(url)` | `url` (string) | Informasi lengkap komik & list chapter. |
+| **Reading** | `testKomikindoChapter(url)` | `url` (string) | Gambar chapter dan navigasi prev/next. |
+| **Latest** | `testKomikindoLatest(p)` | `page` (num) | Daftar komik update terbaru. |
+| **Colored** | `testKomikindoColored(p)` | `page` (num) | Daftar komik berwarna (Webtoon). |
+| **Manga List**| `testKomikindoMangaList(p)` | `page` (num) | Daftar semua komik. |
+| **Manga** | `testKomikindoManga(p)` | `page` (num) | Daftar manga (Jepang). |
+| **Manhwa** | `testKomikindoManhwa(p)` | `page` (num) | Daftar manhwa (Korea). |
+| **Manhua** | `testKomikindoManhua(p)` | `page` (num) | Daftar manhua (China). |
+| **By Genre** | `testKomikindoByGenre(slug, p)` | `slug` (str), `page` (num) | Daftar komik per genre (E.g. action). |
+
+---
 
 # Meionovels (Light Novel Scraper)
 

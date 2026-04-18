@@ -99,7 +99,9 @@ async function getFilter(options = {}) {
 }
 async function getDetail(url) {
   try {
-    if (!url.startsWith('http')) url = `${BASE_URL}${url}`;
+    if (!url.startsWith('http')) {
+      url = url.startsWith('/') ? `${BASE_URL}${url}` : `${BASE_URL}/${url}`;
+    }
     const { data } = await client.get(url);
     const $ = cheerio.load(data);
     checkCloudflare($);
@@ -215,51 +217,10 @@ async function getDetail(url) {
     throw error;
   }
 }
-async function getDownloadLinks(slug, config = {}) {
-  try {
-    const { userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36',
-            cookie = 'cf_chl_rc_ni=1; validate=83ca7fadbd3a87eb2eceaee5ce43fe9a0d353b84; adoverlay_clicked=1' } = config;
-    const slugMatch = slug.match(/dl\.lk21\.party\/([^/]+)/);
-    const finalSlug = slugMatch ? slugMatch[1] : slug.replace(/^\//, '').replace(/\/$/, '');
-    const url = `https://dl.lk21.party/verifying.php?slug=${finalSlug}`;
-    const data = new URLSearchParams({ slug: finalSlug });
-    const response = await axios.post(url, data.toString(), {
-      headers: {
-        'User-Agent': userAgent,
-        'Cookie': cookie,
-        'Accept': '*/*',
-        'Accept-Language': 'en-US,en;q=0.9,id;q=0.8',
-        'Origin': 'https://dl.lk21.party',
-        'Referer': `https://dl.lk21.party/${finalSlug}/`,
-        'X-Requested-Header': 'XMLHttpRequest',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        'Connection': 'keep-alive'
-      }
-    });
-    const $ = cheerio.load(response.data);
-    const results = [];
-    $('table tbody tr').each((i, row) => {
-      const provider = $(row).find('td').first().text().trim();
-      $(row).find('td').last().find('a').each((j, link) => {
-        const text = $(link).text().trim();
-        const href = $(link).attr('href');
-        const qualityMatch = text.match(/(\\d+p)/);
-        const quality = qualityMatch ? qualityMatch[1] : text;
-        if (href && href !== '#') {
-          results.push({ provider, quality, url: href });
-        }
-      });
-    });
-    return results;
-  } catch (error) {
-    console.error(`Error fetching download links: ${error.message}`);
-    throw error;
-  }
-}
+
 module.exports = {
   getHome,
   getSearch,
   getFilter,
-  getDetail,
-  getDownloadLinks
+  getDetail
 };
