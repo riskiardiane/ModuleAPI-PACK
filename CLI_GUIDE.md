@@ -65,6 +65,7 @@ node test.js meionovels genre "action" [page]
 
 # Downloader & Sticker
 node test.js tiktok <url>
+node test.js spotify <url_atau_judul>
 node test.js brat "halo dunia"
 node test.js bratvid "video teks"
 ```
