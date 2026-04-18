@@ -1,4 +1,4 @@
-const { tiktok, brat, animku, lk21, donghub, lyrics, quran, komikmama } = require("./fitur");
+const { tiktok, brat, animku, lk21, donghub, lyrics, quran, komikmama, meionovels } = require("./fitur");
 
 async function testTiktok(url) {
   console.log("[Test] TikTok Downloader...");
@@ -232,6 +232,36 @@ async function testKomikMamaFilter(genre, status, type, order, page) {
   return await komikmama.getFilter({ genre, status, type, order, page });
 }
 
+async function testMeionovelsHome() {
+  console.log("[Test] Meionovels home...");
+  return await meionovels.home();
+}
+
+async function testMeionovelsSearch(query, page) {
+  console.log("[Test] Meionovels search...");
+  return await meionovels.search(query, page);
+}
+
+async function testMeionovelsDetail(url) {
+  console.log("[Test] Meionovels detail...");
+  return await meionovels.detail(url);
+}
+
+async function testMeionovelsChapter(url) {
+  console.log("[Test] Meionovels chapter...");
+  return await meionovels.chapter(url);
+}
+
+async function testMeionovelsGenres() {
+  console.log("[Test] Meionovels genres...");
+  return await meionovels.genres();
+}
+
+async function testMeionovelsByGenre(slug, page) {
+  console.log("[Test] Meionovels getByGenre...");
+  return await meionovels.getByGenre(slug, page);
+}
+
 module.exports = {
   testTiktok,
   testBrat,
@@ -273,7 +303,13 @@ module.exports = {
   testKomikMamaChapter,
   testKomikMamaGenres,
   testKomikMamaByGenre,
-  testKomikMamaFilter
+  testKomikMamaFilter,
+  testMeionovelsHome,
+  testMeionovelsSearch,
+  testMeionovelsDetail,
+  testMeionovelsChapter,
+  testMeionovelsGenres,
+  testMeionovelsByGenre
 };
 
 if (require.main === module) {
@@ -307,6 +343,14 @@ if (require.main === module) {
     console.log("  - node test.js komikmama genres");
     console.log("  - node test.js genre \"martial-arts\" [page]");
     console.log("  - node test.js komikmama filter <genre_id> <status> <type> <order> [page]");
+
+    console.log("\n📌 [MEIONOVELS SHORTCUTS]");
+    console.log("  - node test.js meionovels home");
+    console.log("  - node test.js meionovels search \"query\" [page]");
+    console.log("  - node test.js meionovels detail \"url\"");
+    console.log("  - node test.js meionovels chapter \"url\"");
+    console.log("  - node test.js meionovels genres");
+    console.log("  - node test.js meionovels genre \"action\" [page]");
 
     console.log("\n📌 [OTHER SHORTCUTS]");
     console.log("  - node test.js tiktok <url>");
@@ -370,7 +414,16 @@ if (require.main === module) {
       filter: 'testKomikMamaFilter'
     },
     genre: 'testKomikMamaByGenre',
-    komik: 'komikmama'
+    komik: 'komikmama',
+    meionovels: {
+      home: 'testMeionovelsHome',
+      search: 'testMeionovelsSearch',
+      detail: 'testMeionovelsDetail',
+      chapter: 'testMeionovelsChapter',
+      reading: 'testMeionovelsChapter',
+      genres: 'testMeionovelsGenres',
+      genre: 'testMeionovelsByGenre'
+    }
   };
 
   if (shortcuts[command]) {
