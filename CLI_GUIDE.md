@@ -90,6 +90,7 @@ const test = require('./test');
 | **TikTok** | `testTiktok(url)` | `url` (string) | `test.testTiktok("https://vt.tiktok.com/xxxx/")` |
 | **Brat (Image)** | `testBrat(text)` | `text` (string) | `test.testBrat("halo dunia")` |
 | **Brat (Video)** | `testBratVid(text)` | `text` (string) | `test.testBratVid("halo dunia")` |
+| **Spotify** | `testSpotify(url)` | `url` (string) | `test.testSpotify("https://open.spotify.com/track/xxx")` |
 
 ---
 

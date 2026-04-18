@@ -7,6 +7,7 @@ const lyrics = require("./data/music/lyrics");
 const quran = require("./data/islami/quran");
 const komikmama = require("./data/read/komikmama");
 const meionovels = require("./data/read/meionovels");
+const spotify = require("./data/downloader/spotify");
 
 module.exports = {
   tiktok: tiktokdl2,
@@ -17,5 +18,6 @@ module.exports = {
   lyrics,
   quran,
   komikmama,
-  meionovels
+  meionovels,
+  spotify
 };

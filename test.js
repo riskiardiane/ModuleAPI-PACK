@@ -1,4 +1,4 @@
-const { tiktok, brat, animku, lk21, donghub, lyrics, quran, komikmama, meionovels } = require("./fitur");
+const { tiktok, brat, animku, lk21, donghub, lyrics, quran, komikmama, meionovels, spotify } = require("./fitur");
 
 async function testTiktok(url) {
   console.log("[Test] TikTok Downloader...");
@@ -262,6 +262,11 @@ async function testMeionovelsByGenre(slug, page) {
   return await meionovels.getByGenre(slug, page);
 }
 
+async function testSpotify(url) {
+  console.log("[Test] Spotify Downloader...");
+  return await spotify(url);
+}
+
 module.exports = {
   testTiktok,
   testBrat,
@@ -309,7 +314,8 @@ module.exports = {
   testMeionovelsDetail,
   testMeionovelsChapter,
   testMeionovelsGenres,
-  testMeionovelsByGenre
+  testMeionovelsByGenre,
+  testSpotify
 };
 
 if (require.main === module) {
@@ -357,6 +363,7 @@ if (require.main === module) {
     console.log("  - node test.js brat \"text\"");
     console.log("  - node test.js bratvid \"text\"");
     console.log("  - node test.js lyrics \"query\"");
+    console.log("  - node test.js spotify \"https://open.spotify.com/track/xxx\"");
     console.log("  - node test.js quran <surah_number>");
 
     console.log("\n📌 [LEGACY MODE]");
@@ -377,6 +384,7 @@ if (require.main === module) {
     },
     donghub: 'donghua',
     tiktok: 'testTiktok',
+    spotify: 'testSpotify',
     lyrics: {
       search: 'testLyricsSearch',
       get: 'testLyrics',
