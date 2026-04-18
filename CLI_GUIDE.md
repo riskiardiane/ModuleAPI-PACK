@@ -55,6 +55,14 @@ node test.js komikmama genres
 node test.js genre martial-arts 2
 node test.js komikmama filter 11 ongoing manhwa update 1
 
+# Meionovels (MeioNovel)
+node test.js meionovels home
+node test.js meionovels search "query" [page]
+node test.js meionovels detail "url"
+node test.js meionovels chapter "url"
+node test.js meionovels genres
+node test.js meionovels genre "action" [page]
+
 # Downloader & Sticker
 node test.js tiktok <url>
 node test.js brat "halo dunia"
@@ -187,6 +195,17 @@ const test = require('./test');
 | **Genres** | `testKomikMamaGenres()` | - | Daftar semua kategori genre & jumlah komik. |
 | **By Genre** | `testKomikMamaByGenre(slug, p)` | `slug` (str), `page` (num) | Daftar komik per genre (E.g. martial-arts). |
 | **Filter** | `testKomikMamaFilter(g, s, t, o, p)` | ID/string (multiple) | Filter canggih (Genre ID, Status, Tipe, Order). |
+
+# Meionovels (Light Novel Scraper)
+
+| Fitur | Fungsi | Parameter | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| **Home** | `testMeionovelsHome()` | - | Novel terbaru, slider, dan populer. |
+| **Search** | `testMeionovelsSearch(q, p)` | `query` (str), `page` (num) | Cari novel dengan pagination. |
+| **Detail** | `testMeionovelsDetail(url)` | `url` (string) | Info novel & list chapter (AJAX supported). |
+| **Reading** | `testMeionovelsChapter(url)` | `url` (string) | Isi teks novel dan navigasi prev/next. |
+| **Genres** | `testMeionovelsGenres()` | - | Daftar kategori genre yang tersedia. |
+| **By Genre** | `testMeionovelsByGenre(slug, p)` | `slug` (str), `page` (num) | Daftar novel per genre (E.g. action). |
 
 ---
 
