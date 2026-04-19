@@ -11,8 +11,11 @@ const spotify = require("./data/downloader/spotify");
 const komikindo = require("./data/read/komikindo");
 const cnn = require("./data/read/cnn");
 const removebg = require("./images/removebg");
+const otakupoi = require("./data/watch/otakupoi");
+
 
 module.exports = {
+
   tiktok: tiktokdl2,
   brat,
   animku,
@@ -25,5 +28,7 @@ module.exports = {
   spotify,
   komikindo,
   cnn,
-  removebg
+  removebg,
+  otakupoi
 };
+

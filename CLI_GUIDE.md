@@ -87,6 +87,18 @@ node test.js cnn home
 node test.js cnn read "https://www.cnnindonesia.com/olahraga/20260418234848-142-1349559/kurniawan-pastikan-mierza-bisa-main-lawan-vietnam"
 node test.js cnn search "sepak bola" 1
 node test.js cnn video "https://www.cnnindonesia.com/tv/20260418192247-407-1348675/video-timnas-garuda-muda-siap-hadapi-malaysia"
+
+# OtakuPoi (Neonime)
+node test.js otakupoi home
+node test.js otakupoi search "solo leveling" 1
+node test.js otakupoi ongoing 1
+node test.js otakupoi genre action 1
+node test.js otakupoi cast daisuke-hirakawa 1
+node test.js otakupoi network tokyo-mx 1
+node test.js otakupoi studio aniplex 1
+node test.js otakupoi year 2024 1
+node test.js otakupoi detail "solo-leveling-subtitle-indonesia"
+node test.js otakupoi watch "solo-leveling-1x1-subtitle-indonesia"
 ```
 
 ### 2. Menggunakan Module (Manual)
@@ -256,6 +268,23 @@ const test = require('./test');
 | **Read** | `testCnnRead(url)` | `url` (string) | Membaca artikel lengkap termasuk gambar galeri. |
 | **Search** | `testCnnSearch(q, p)` | `query` (str), `page` (num) | Cari berita dengan pagination & info tipe konten. |
 | **Video** | `testCnnVideo(url)` | `url` (string) | Ekstraksi direct link streaming m3u8 dari video. |
+
+---
+
+## 🍱 OtakuPoi (Neonime) - Anime Scraper
+
+| Fitur | Fungsi | Parameter | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| **Home** | `testOtakuPoiHome()` | - | Anime ongoing dan completed terbaru. |
+| **Search** | `testOtakuPoiSearch(q, p)` | `query` (str), `page` (num) | Cari anime dengan pagination. |
+| **Ongoing** | `testOtakuPoiOngoing(p)` | `page` (num) | Daftar anime ongoing khusus. |
+| **By Genre** | `testOtakuPoiByGenre(slug, p)` | `slug` (str), `page` (num) | Daftar anime berdasarkan genre. |
+| **By Cast** | `testOtakuPoiByCast(slug, p)` | `slug` (str), `page` (num) | Daftar anime berdasarkan pengisi suara. |
+| **By Network** | `testOtakuPoiByNetwork(slug, p)` | `slug` (str), `page` (num) | Daftar anime berdasarkan TV Network. |
+| **By Studio** | `testOtakuPoiByStudio(slug, p)` | `slug` (str), `page` (num) | Daftar anime berdasarkan studio. |
+| **By Year** | `testOtakuPoiByYear(slug, p)` | `slug` (str), `page` (num) | Daftar anime berdasarkan tahun rilis. |
+| **Detail** | `testOtakuPoiDetail(slug)` | `slug` (string) | Informasi detail, metadata linked, & episodes. |
+| **Watch** | `testOtakuPoiWatch(slug)` | `slug` (string) | Link stream, server list, & download links. |
 
 ---
 

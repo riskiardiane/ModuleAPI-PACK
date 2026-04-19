@@ -15,6 +15,7 @@ Koleksi API Scraper modular yang powerful untuk berbagai kebutuhan, mulai dari d
 | **Islami** | Quran & Doa | Daftar surah, ayat, dan doa-doa harian dari Quran NU. |
 | **Komik** | KomikMama | Scraper komik (Manga, Manhwa, Manhua) |
 | **News** | CNN Indonesia | Scraper berita lengkap (Headline, Search, Read, Video Stream). |
+| **Anime** | OtakuPoi | Scraper anime lengkap (Home, Search, Genre, Cast, Studio, Watch). |
 | **AI Feature** | Remove Background | Menghapus background gambar menggunakan AI offline (Tanpa API Key). |
 
 ## 🛠️ Instalasi
@@ -160,6 +161,21 @@ const anime = await test.testAnimkuDetail("naruto");
 | `read(url)` | article URL | Detail berita, isi bersih, dan galeri gambar |
 | `search(query, page?)` | query, page optional | Hasil cari dengan info tipe konten |
 | `video(url)` | video URL | Detail video dan direct link m3u8 |
+
+### OtakuPoi (Anime Scraper)
+
+| Method | Parameter | Return |
+|--------|-----------|--------|
+| `home()` | - | Anime ongoing & completed terbaru |
+| `search(query, page?)` | query, page optional | Hasil cari dengan pagination |
+| `ongoing(page?)` | page optional | Daftar anime ongoing |
+| `getByGenre(slug, page?)` | slug, page optional | Anime berdasarkan genre |
+| `getByCast(slug, page?)` | slug, page optional | Anime berdasarkan cast |
+| `getByNetwork(slug, page?)` | slug, page optional | Anime berdasarkan network |
+| `getByStudio(slug, page?)` | slug, page optional | Anime berdasarkan studio |
+| `getByYear(year, page?)` | year, page optional | Anime berdasarkan tahun |
+| `detail(slug)` | anime slug | Info detail, metadata, & episodes |
+| `watch(slug_eps)` | episode slug | Link stream, server list, & downloads |
 
 ## 📝 Kontribusi
 

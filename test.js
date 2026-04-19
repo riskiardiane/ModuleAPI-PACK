@@ -1,4 +1,6 @@
-const { tiktok, brat, animku, lk21, donghub, lyrics, quran, komikmama, meionovels, spotify, komikindo, cnn, removebg } = require("./fitur");
+const { tiktok, brat, animku, lk21, donghub, lyrics, quran, komikmama, meionovels, spotify, komikindo, cnn, removebg, otakupoi } = require("./fitur");
+
+
 
 async function testTiktok(url) {
   console.log("[Test] TikTok Downloader...");
@@ -347,7 +349,66 @@ async function testRemoveBg(imageInput) {
   return { success: true, path: outputPath };
 }
 
+
+async function testOtakuPoiHome() {
+  console.log("[Test] OtakuPoi Home...");
+  return await otakupoi.home();
+}
+
+async function testOtakuPoiSearch(query, page) {
+  console.log("[Test] OtakuPoi Search...");
+  return await otakupoi.search(query, page);
+}
+
+async function testOtakuPoiDetail(url) {
+  console.log("[Test] OtakuPoi Detail...");
+  return await otakupoi.detail(url);
+}
+
+async function testOtakuPoiWatch(url) {
+  console.log("[Test] OtakuPoi Watch...");
+  return await otakupoi.watch(url);
+}
+
+
+async function testOtakuPoiOngoing(page) {
+  console.log("[Test] OtakuPoi Ongoing...");
+  return await otakupoi.ongoing(page);
+}
+
+
+async function testOtakuPoiByGenre(slug, page) {
+  console.log("[Test] OtakuPoi By Genre...");
+  return await otakupoi.getByGenre(slug, page);
+}
+
+
+async function testOtakuPoiByCast(slug, page) {
+  console.log("[Test] OtakuPoi By Cast...");
+  return await otakupoi.getByCast(slug, page);
+}
+
+
+async function testOtakuPoiByNetwork(slug, page) {
+  console.log("[Test] OtakuPoi By Network...");
+  return await otakupoi.getByNetwork(slug, page);
+}
+
+
+async function testOtakuPoiByStudio(slug, page) {
+  console.log("[Test] OtakuPoi By Studio...");
+  return await otakupoi.getByStudio(slug, page);
+}
+
+
+async function testOtakuPoiByYear(year, page) {
+  console.log("[Test] OtakuPoi By Year...");
+  return await otakupoi.getByYear(year, page);
+}
+
+
 module.exports = {
+
   testTiktok,
   testBrat,
   testBratVid,
@@ -410,8 +471,19 @@ module.exports = {
   testCnnSearch,
   testCnnVideo,
   testSpotify,
-  testRemoveBg
+  testRemoveBg,
+  testOtakuPoiHome,
+  testOtakuPoiSearch,
+  testOtakuPoiOngoing,
+  testOtakuPoiByGenre,
+  testOtakuPoiByCast,
+  testOtakuPoiByNetwork,
+  testOtakuPoiByStudio,
+  testOtakuPoiByYear,
+  testOtakuPoiDetail,
+  testOtakuPoiWatch
 };
+
 
 if (require.main === module) {
   const args = process.argv.slice(2);
@@ -478,6 +550,19 @@ if (require.main === module) {
     console.log("  - node test.js cnn read \"url\"");
     console.log("  - node test.js cnn search \"query\"");
     console.log("  - node test.js cnn video \"url\"");
+    console.log("\n📌 [OTAKUPOI SHORTCUTS]");
+    console.log("  - node test.js otakupoi home");
+    console.log("  - node test.js otakupoi genre \"action\" [page]");
+    console.log("  - node test.js otakupoi cast \"daisuke-hirakawa\" [page]");
+    console.log("  - node test.js otakupoi network \"tokyo-mx\" [page]");
+    console.log("  - node test.js otakupoi studio \"aniplex\" [page]");
+    console.log("  - node test.js otakupoi year \"2024\" [page]");
+    console.log("  - node test.js otakupoi ongoing [page]");
+    console.log("  - node test.js ongoing [page]");
+    console.log("  - node test.js detail \"slug\"");
+    console.log("  - node test.js otakupoi search \"query\" [page]");
+    console.log("  - node test.js search \"query\"");
+    console.log("  - node test.js otakupoi watch \"slug\"");
 
     console.log("\n📌 [LEGACY MODE]");
     console.log("  - node test.js testDonghubSearch \"soul land\"");
@@ -535,6 +620,8 @@ if (require.main === module) {
       genre: 'testKomikMamaByGenre',
       filter: 'testKomikMamaFilter'
     },
+    ongoing: 'testOtakuPoiOngoing',
+    detail: 'testOtakuPoiDetail',
     genre: 'testKomikMamaByGenre',
     komik: 'komikmama',
     meionovels: {
@@ -565,6 +652,18 @@ if (require.main === module) {
       read: 'testCnnRead',
       search: 'testCnnSearch',
       video: 'testCnnVideo'
+    },
+    otakupoi: {
+      home: 'testOtakuPoiHome',
+      search: 'testOtakuPoiSearch',
+      ongoing: 'testOtakuPoiOngoing',
+      genre: 'testOtakuPoiByGenre',
+      cast: 'testOtakuPoiByCast',
+      network: 'testOtakuPoiByNetwork',
+      studio: 'testOtakuPoiByStudio',
+      year: 'testOtakuPoiByYear',
+      detail: 'testOtakuPoiDetail',
+      watch: 'testOtakuPoiWatch'
     }
   };
 
